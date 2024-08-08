@@ -19,6 +19,8 @@ import Loading from '../Loading';
 import Nav from '../Nav';
 import Popup from '../popup/Popup';
 import PopupContent, { PopupType } from '../popup/PopupMessages';
+import { useMyPillStore } from '../../store/myPill';
+import { useAllAlarmStore } from '../../store/allAlarms';
 
 enum pageState {
   Main,
@@ -37,6 +39,9 @@ const MyPage = () => {
   const [popupType, setPopupType] = useState(PopupType.None);
   const [loading, setLoading] = useState(false);
   const { deleteChat } = useChatBot();
+  const { clearAllPills } = useMyPillStore();
+  const { clearAllAlarms } = useAllAlarmStore();
+
   const navigate = useNavigate();
 
   const renderContent = () => {
@@ -75,6 +80,8 @@ const MyPage = () => {
                     navigate('/', { replace: true });
                     window.location.reload();
                     deleteChat();
+                    clearAllPills();
+                    clearAllAlarms();
                   })
                 }
               >

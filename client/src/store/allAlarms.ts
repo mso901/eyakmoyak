@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 
 export interface AlarmInfo {
@@ -34,7 +35,8 @@ interface AlarmState {
   clearAllAlarms: () => void;
 }
 
-export const useAllAlarmStore = create<AlarmState>(((set) => ({
+export const useAllAlarmStore = create(
+  persist<AlarmState>(((set) => ({
     currentPillAlarms:[],
     confirmedPillAlarms:[],
 
@@ -82,6 +84,8 @@ export const useAllAlarmStore = create<AlarmState>(((set) => ({
 
         nextPillAlarmTime:undefined,
         nextExpiredAlarmTime:undefined,
-       });
-    }
-})));
+       });}
+      
+  })), 
+  {name: 'all-alarms-storage'
+}));

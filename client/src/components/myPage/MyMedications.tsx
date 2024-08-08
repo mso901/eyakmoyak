@@ -13,6 +13,7 @@ import PopupContent, { PopupType } from '../popup/PopupMessages';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchAutocompleteSuggestions } from '../../api/searchApi';
 import Toast from '../Toast';
+import { useMyPillStore } from '../../store/myPill';
 
 interface MedicationItem {
   id: string;
@@ -37,6 +38,7 @@ const MyMedications = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState('');
+  const { addPills, deletePill, pills } = useMyPillStore();
 
   const maxTextLength = 15;
 
@@ -59,6 +61,7 @@ const MyMedications = () => {
                     setItems((prevItems) =>
                       prevItems.filter((item) => item.id !== selected?.id)
                     );
+                    deletePill(selected?.id ?? '');
                     setItemCount(itemCount - 1);
                     setLoading(false);
                     setSelected(undefined);
@@ -142,13 +145,15 @@ const MyMedications = () => {
     return `${year}.${month}.${day}`;
   };
 
-  const fetchDatas = (latestData = false) => {
+  const fetchDatas = async (latestData = false) => {
     fetchMyPills(
       latestData ? 1 : limit,
       latestData ? 0 : offset,
       'createdAt',
       'DESC',
       (data) => {
+        addPills(data.data);
+
         const pillDatas = data.data;
         const temp: MedicationItem[] = pillDatas.map((d: any) => ({
           id: d.pillid,

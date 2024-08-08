@@ -17,10 +17,8 @@ const BottomPictureSheet = ({
   onClose: (pic: FileList | null) => Promise<void>;
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  console.log(navigator.userAgent);
-  
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   const onUploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;

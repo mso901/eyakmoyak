@@ -34,6 +34,17 @@ export const addMyPills = async ( name:string, expiredat:string,alarmstatus:bool
     }
   };
 
+  export const fetchExpiredPills = async () => {
+    try {
+      const data = await get('/api/mypills/expiredtoday' );
+      return data;
+  
+    } catch (error) {
+      console.error('fetch Expired Pills failed', error);
+      throw error;
+    }
+  };
+
   export const updateMyPills = async (
     mypillid:string,
     name:string, expiredat:string,
