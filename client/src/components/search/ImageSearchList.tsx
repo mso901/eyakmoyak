@@ -34,12 +34,20 @@ const ImageSearchList = ({ pills }: { pills: PillData[] | null }) => {
           className='listItem'
         >
           <img src={pill.imgurl} alt='알약' />
-          <div>
+          <ListText>
             <p>{pill.name}</p>
-            <p>{pill.similarity}</p>
-          </div>
+            <span>{pill.similarity}</span>
+          </ListText>
         </ListItem>
       ))}
+      {pill.similarity ? (
+        <p>
+          텍스트 추출이 불가능하여 AI 이미지 유사도 검사를 통해 유사한 알약을
+          찾았습니다.
+        </p>
+      ) : (
+        <p>AI 텍스트 추출 기술을 이용하여 유사한 알약을 찾았습니다.</p>
+      )}
     </div>
   );
 };
@@ -50,10 +58,16 @@ const ListItem = styled(Link)`
   display: flex;
 
   & img {
-    width: 50px;
+    width: 80px;
+    height: auto;
   }
+`;
 
-  & div {
-    margin-left: 10px;
+const ListText = styled.div`
+  margin-left: 10px;
+
+  & span {
+    color: gray;
+    font-size: 14px;
   }
 `;

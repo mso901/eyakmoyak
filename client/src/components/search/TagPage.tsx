@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import { create } from 'zustand';
 import Layout from '../Layout';
 import {
-  fetchPillListByEfficacy,
-  fetchFavoriteCount,
-  fetchReviewCount
+  fetchPillListByEfficacy
 } from '../../api/searchApi';
 import { useSearchParams } from 'react-router-dom';
 import Loading from '../Loading';
@@ -18,30 +16,18 @@ export interface PillData {
   importantWords: string;
   imgurl: string;
   boxurl?: string;
+  favorites_count: string; 
+  reviews_count: string;
 }
 
 interface PillStore {
   pillData: PillData[];
   setPillData: (data: PillData[]) => void;
-  favoriteCounts: { [id: number]: number };
-  setFavoriteCount: (id: number, count: number) => void;
-  reviewCounts: { [id: number]: number };
-  setReviewCount: (id: number, count: number) => void;
 }
 
 const usePillStore = create<PillStore>((set) => ({
   pillData: [],
-  setPillData: (data) => set({ pillData: data }),
-  favoriteCounts: {},
-  setFavoriteCount: (id, count) =>
-    set((state) => ({
-      favoriteCounts: { ...state.favoriteCounts, [id]: count }
-    })),
-  reviewCounts: {},
-  setReviewCount: (id, count) =>
-    set((state) => ({
-      reviewCounts: { ...state.reviewCounts, [id]: count }
-    }))
+  setPillData: (data) => set({ pillData: data })
 }));
 
 const TagPage = () => {
@@ -49,11 +35,7 @@ const TagPage = () => {
   const query = searchParams.get('q') || '';
   const {
     pillData,
-    setPillData,
-    favoriteCounts,
-    setFavoriteCount,
-    reviewCounts,
-    setReviewCount
+    setPillData
   } = usePillStore();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -61,18 +43,10 @@ const TagPage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await fetchPillListByEfficacy(query, 10, 10);
+        const data = await fetchPillListByEfficacy(query);
         console.log('효능 데이터:', data);
         setPillData(data);
 
-        await Promise.all(
-          data.map(async (pill: PillData) => {
-            const favoritecount = await fetchFavoriteCount(pill.id); 
-            setFavoriteCount(pill.id, favoritecount);
-            const reviewcount = await fetchReviewCount(pill.id.toString());
-            setReviewCount(pill.id, reviewcount);
-          })
-        );
       } catch (error) {
         console.log('효능 데이터 가져오기 실패:', error);
       } finally {
@@ -116,8 +90,8 @@ const TagPage = () => {
                     <img src='/img/arrow.svg' alt='더보기' />
                   </PillTitle>
                   <FavoritesCount>
-                    <p>즐겨찾기 {favoriteCounts[pill.id] || 0}</p>
-                    <p>리뷰 {reviewCounts[pill.id] || 0}</p>
+                    <p>즐겨찾기 {pill.favorites_count || 0}</p>
+                    <p>리뷰 {pill.reviews_count || 0}</p>
                   </FavoritesCount>
                   <TagContainer className='tagContainer'>
                     {pill.importantWords &&

@@ -13,6 +13,7 @@ interface NavItem {
   label: string;
   icon: Icon;
   style?: React.CSSProperties;
+  iconSize?: React.CSSProperties;
 }
 
 const Nav = () => {
@@ -22,8 +23,9 @@ const Nav = () => {
       label: '홈',
       icon: {
         default: '/img/nav/home.png',
-        active: '/img/nav/homeClicked.png'
-      }
+        active: '/img/nav/homeClicked.svg'
+      },
+      iconSize: { width: '37px' }
     },
     {
       name: 'chatbot',
@@ -32,7 +34,7 @@ const Nav = () => {
         default: '/img/nav/talk.png',
         active: '/img/nav/talkClicked.png'
       },
-      style: { color: 'FDE72E' }
+      iconSize: { width: '40px' }
     },
     {
       name: 'calendar',
@@ -49,8 +51,7 @@ const Nav = () => {
       icon: {
         default: '/img/nav/bell.svg',
         active: '/img/nav/bellClicked.png'
-      },
-      style: { marginLeft: '10px' }
+      }
     },
     {
       name: 'myPage',
@@ -58,7 +59,8 @@ const Nav = () => {
       icon: {
         default: '/img/nav/user.png',
         active: '/img/nav/userClicked.png'
-      }
+      },
+      iconSize: { width: '30px' }
     }
   ];
 
@@ -68,7 +70,7 @@ const Nav = () => {
     <NavContainer>
       <ul>
         {navItems.map((item) => {
-          const { name, style, label, icon } = item;
+          const { name, style, label, icon, iconSize } = item;
           const isHomePage = name === 'home';
           const navPathname = isHomePage ? '/' : `/${name}`;
           const isActive =
@@ -76,12 +78,13 @@ const Nav = () => {
               ? !isHomePage && locationPathname.startsWith(navPathname)
               : isHomePage;
           const iconSrc = !isActive ? icon.default : icon.active;
+            const textColor = isActive ? 'var(--secondary-color)' : '#c6c6c6';
 
           return (
             <li key={name} style={style}>
               <StyledLink to={navPathname}>
-                <img src={iconSrc} alt={label} />
-                <p>{label}</p>
+                <img src={iconSrc} alt={label} style={iconSize} />
+                <p style={{ color: textColor }}>{label}</p>
               </StyledLink>
             </li>
           );
@@ -101,6 +104,7 @@ const NavContainer = styled.nav`
   width: 100vw;
   height: 80px;
   background-color: #ffffff;
+  
   & ul {
     display: flex;
     justify-content: space-evenly;

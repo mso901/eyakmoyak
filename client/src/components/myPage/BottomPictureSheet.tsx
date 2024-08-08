@@ -40,36 +40,36 @@ const BottomPictureSheet = ({
     <Sheet>
       <BottomSheet isVisible={isVisible} onClose={() => onClose(null)}>
         <div className='title'>
-          {title}
+          <span>{title}</span>
           {isLoading ? (
             <Icon
               icon='line-md:loading-twotone-loop'
               width='1.5rem'
               height='1.5rem'
-              style={{ color: 'black' }}
+              style={{ color: 'black', marginLeft: '5px' }}
             />
           ) : null}
         </div>
-          {isMobile && (
-        <div className='menu'>
-          <Icon
-            icon='ph:camera-light'
-            width='1.5rem'
-            height='1.5rem'
-            style={{ color: 'black' }}
-            onClick={() => {}}
-          />{' '}
-          카메라로 촬영하기
-          <input
-            className='file-input'
-            type='file'
-            multiple={useMultiple}
-            capture='environment'
-            ref={inputRef}
-            onChange={onUploadImage}
-          />
-        </div>
-           )}
+        {isMobile && (
+          <div className='menu'>
+            <Icon
+              icon='ph:camera-light'
+              width='1.5rem'
+              height='1.5rem'
+              style={{ color: 'black' }}
+              onClick={() => {}}
+            />{' '}
+            카메라로 촬영하기
+            <input
+              className='file-input'
+              type='file'
+              multiple={useMultiple}
+              capture='environment'
+              ref={inputRef}
+              onChange={onUploadImage}
+            />
+          </div>
+        )}
         <div className='menu'>
           <Icon
             icon='solar:gallery-bold'
@@ -104,6 +104,8 @@ const Sheet = styled.div`
   }
 
   .title {
+    display: flex;
+    align-items: center;
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 20px;

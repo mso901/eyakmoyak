@@ -46,7 +46,7 @@ const PillExp = () => {
           </li>
           <li>
             <ListTitle>
-              <img src={`/img/pillexp/star.svg`} alt='별모양' />
+              <img src={`/img/pillexp/efficacy.svg`} alt='용량' />
               <span
                 style={{
                   fontWeight: '500'
@@ -59,7 +59,7 @@ const PillExp = () => {
           </li>
           <li>
             <ListTitle>
-              <img src={`/img/pillexp/star.svg`} alt='별모양' />
+              <img src={`/img/pillexp/caution.svg`} alt='주의' />
               <span
                 style={{
                   fontWeight: '500'
@@ -136,6 +136,10 @@ const PillExpBox = styled.div`
 const ListTitle = styled.div`
   display: flex;
   align-items: center;
+
+  & img{
+    width: 24px;
+  }
   & span {
     margin-left: 5px;
   }

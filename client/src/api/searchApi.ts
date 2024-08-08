@@ -18,15 +18,11 @@ export const fetchPillDataByName = async (
 };
 
 export const fetchPillListByEfficacy = async (
-  efficacy: string,
-  limit: number = 10,
-  offset: number = 0
+  efficacy: string
 ) => {
   try {
     const data = await get(`/api/pills/search/efficacy`, {
-      efficacy,
-      limit,
-      offset
+      efficacy
     });
     console.log('효능으로 검색 Get:', data);
     if (data.pills && data.pills.length > 0) {

@@ -121,7 +121,7 @@ const SearchBox = ({ useRoute = false }: { useRoute?: boolean }) => {
 
   return (
     <>
-      <SearchContainer>
+      <SearchBoxContainer>
         <StyledLink to='/search' onClick={handleSearch}>
           <SearchIcon
             src={`/img/search_icon.png`}
@@ -136,12 +136,11 @@ const SearchBox = ({ useRoute = false }: { useRoute?: boolean }) => {
           />
         </StyledLink>
         <SearchIcon
-          src={`/img/camera.png`}
+          src={`/img/camera1.png`}
           alt='camera'
           onClick={handleCameraClick}
         />
-      </SearchContainer>
-      <p onClick={handleCameraClick}>이미지로 검색</p>
+      </SearchBoxContainer>
       <BottomPictureSheet
         title={'사진 등록'}
         isLoading={loading}
@@ -160,7 +159,7 @@ const SearchBox = ({ useRoute = false }: { useRoute?: boolean }) => {
 
 export default SearchBox;
 
-const SearchContainer = styled.div`
+const SearchBoxContainer = styled.div`
   position: absolute;
   top: 100%;
   left: 50%;
@@ -168,6 +167,7 @@ const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0 15px;
+  margin-bottom: 10px;
   box-sizing: border-box;
   width: 90vw;
   height: 40px;
