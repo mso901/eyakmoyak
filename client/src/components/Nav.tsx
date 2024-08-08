@@ -23,7 +23,7 @@ const Nav = () => {
       label: '홈',
       icon: {
         default: '/img/nav/home.png',
-        active: '/img/nav/homeClicked.svg'
+        active: '/img/nav/homeClicked.png'
       },
       iconSize: { width: '37px' }
     },
