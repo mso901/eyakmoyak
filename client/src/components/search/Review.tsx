@@ -60,6 +60,11 @@ const Review = ({ pillId }: { pillId: number }) => {
     }
   };
 
+  const handleCancelReview = () => {
+    setNewReview(''); 
+    setIsWritingReview(false);
+  };
+
   useEffect(() => {
     const fetchCount = async () => {
       const count = await fetchReviewCount(pillId.toString());
@@ -99,7 +104,10 @@ const Review = ({ pillId }: { pillId: number }) => {
             value={newReview}
             onChange={(e) => setNewReview(e.target.value)}
           />
-          <SubmitButton onClick={handleReviewSubmit}>완료</SubmitButton>
+          <ButtonContainer>
+            <CancelButton onClick={handleCancelReview}>취소</CancelButton>
+            <SubmitButton onClick={handleReviewSubmit}>완료</SubmitButton>
+          </ButtonContainer>
         </ReviewForm>
       )}
       <InfiniteScroll
@@ -199,11 +207,28 @@ const ReviewForm = styled.div`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+`;
+
+const CancelButton = styled.button`
+  width: 60px;
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: #fff;
+  border: 1px solid #ffd700;
+  border-radius: 5px;
+  color: #fdc706;
+  cursor: pointer;
+`;
+
 const SubmitButton = styled.button`
   width: 60px;
   height: 30px;
   margin-top: 10px;
-  align-self: flex-end;
   background-color: #ffd700;
   border: none;
   border-radius: 5px;

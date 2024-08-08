@@ -12,7 +12,7 @@ export const fetchReviews = async ({
   cursor?: string | null;
 }) => {
   try {
-    const data = await get(`/api/reviews/pills/${pillId}`, {
+    const data = await get(`/api/reviews/pills/${pillId}?cursor=${cursor}`, {
       params: {
         initialLimit,
         cursorLimit,

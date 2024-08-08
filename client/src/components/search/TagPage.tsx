@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { create } from 'zustand';
 import Layout from '../Layout';
-import {
-  fetchPillListByEfficacy
-} from '../../api/searchApi';
+import { fetchPillListByEfficacy } from '../../api/searchApi';
 import { useSearchParams } from 'react-router-dom';
 import Loading from '../Loading';
 import NotSearched from './NotSearched';
@@ -16,7 +14,7 @@ export interface PillData {
   importantWords: string;
   imgurl: string;
   boxurl?: string;
-  favorites_count: string; 
+  favorites_count: string;
   reviews_count: string;
 }
 
@@ -33,10 +31,7 @@ const usePillStore = create<PillStore>((set) => ({
 const TagPage = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  const {
-    pillData,
-    setPillData
-  } = usePillStore();
+  const { pillData, setPillData } = usePillStore();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -46,7 +41,6 @@ const TagPage = () => {
         const data = await fetchPillListByEfficacy(query);
         console.log('효능 데이터:', data);
         setPillData(data);
-
       } catch (error) {
         console.log('효능 데이터 가져오기 실패:', error);
       } finally {
@@ -80,10 +74,10 @@ const TagPage = () => {
               <StyledLink
                 to={`/search/name?q=${encodeURIComponent(pill.name)}`}
               >
-                <PillImg
-                  src={pill.boxurl ? pill.boxurl : pill.imgurl}
-                  alt={pill.name}
-                />
+                <PillImg>
+                  <img src={pill.boxurl ? pill.boxurl : pill.imgurl}
+                  alt={pill.name}/>
+                </PillImg>
                 <PillText>
                   <PillTitle>
                     <h3>{pill.name}</h3>
@@ -149,16 +143,25 @@ const PillItem = styled.li`
 
 const StyledLink = styled(Link)`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   color: black;
   text-decoration: none;
 `;
 
-const PillImg = styled.img`
-  width: 120px;
+const PillImg = styled.div`
+  max-width: 35%;
+  max-height: 100px;
+
+  & img {
+    width: 100%;
+    max-height: 100%;
+
+  }
 `;
 
 const PillText = styled.div`
+  width: 65%;
   margin-left: 15px;
 `;
 
