@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PillAlarmChecker from './PillAlarmChecker';
 import PillExpiredAlarmChecker from './PillExpiredAlarmChecker';
-import { isUserLoggedIn } from '../utils/auth';
+import { isUserLoggedIn } from '../../utils/auth';
 import { useEffect } from 'react';
 
 interface Icon {
