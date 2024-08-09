@@ -10,7 +10,7 @@ import {
 import Loading from '../common/Loading';
 import Popup from '../common/popup/Popup';
 import PopupContent, { PopupType } from '../common/popup/PopupMessages';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Toast from '../common/Toast';
 import { useMyPillStore } from '../../store/myPill';
 import InfiniteScroll from '../common/InfiniteScroll';
