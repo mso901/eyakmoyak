@@ -78,6 +78,33 @@ const MyMedications = () => {
           </div>
         );
 
+      case PopupType.ExpiredMedNotice:
+        return (
+          <div>
+            <Icon
+              icon='line-md:alert-circle-twotone-loop'
+              width='3rem'
+              height='3rem'
+              style={{ color: 'red' }}
+            />
+            <br /> <br />
+            <b>{selected?.title}</b>폐의약품을 일반 쓰레기로 버리면 심각한 환경
+            오염을 유발해요. <br />
+            폐의약품 전용 수거함에 버려주세요!
+            <br />
+            <br />
+            <button
+              className='bottomClose'
+              onClick={() => {
+                window.location.href =
+                  'https://map.seoul.go.kr/smgis2/short/6OgWi';
+              }}
+            >
+              폐의약품 전용수거함 위치 보기
+            </button>
+          </div>
+        );
+
       default:
         return PopupContent(type, navigate);
     }
@@ -187,10 +214,11 @@ const MyMedications = () => {
             style={{ color: '#d1d1d1' }}
           />
         </div>
-        <div className='info'>
-          <a href='https://map.seoul.go.kr/smgis2/short/6OgWi'>
-            📍<u>폐의약품 전용수거함 위치</u>
-          </a>
+        <div
+          className='info'
+          onClick={() => setPopupType(PopupType.ExpiredMedNotice)}
+        >
+          📍<u>폐의약품 전용수거함 위치</u>
         </div>
         <Item className='add-new-item' style={{ marginBottom: '20px' }}>
           <div className='empty' onClick={() => setAddBottomSheet(true)}>
