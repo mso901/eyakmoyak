@@ -1,13 +1,7 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useCalendar, useDateStore } from '../../../store/calendar';
 
 interface IsPillTakenProps {
-  pillData?: {
-    name?: string | null;
-    time?: string | string[];
-    taken?: boolean | boolean[];
-  }[];
   edit: boolean;
 }
 
@@ -26,15 +20,9 @@ export const convertToArray = (
   return Array.isArray(value) ? value : [];
 };
 
-const IsPillTaken = ({ pillData = [], edit }: IsPillTakenProps) => {
-  const { setEditTaken } = useDateStore();
-  const { setPillData } = useCalendar();
-
-  useEffect(() => {
-    if (pillData !== undefined) {
-      setPillData(pillData);
-    }
-  }, [pillData, setPillData]);
+const IsPillTaken = ({ edit }: IsPillTakenProps) => {
+  const { setEditTaken, setIndex } = useDateStore();
+  const { nowData } = useCalendar();
 
   const handleIsTakenPill = (times: string[], takenStatuses: boolean[]) => {
     return times.map((time, index) => (
@@ -45,31 +33,33 @@ const IsPillTaken = ({ pillData = [], edit }: IsPillTakenProps) => {
     ));
   };
 
-  const handleEditTaken = () => {
+  const handleEditTaken = (index: number) => {
     if (edit) {
       setEditTaken(true);
+      setIndex(index);
     }
   };
 
   return (
     <PillCheck>
-      {pillData.map((pill, index) => {
-        const times = convertToArray(pill.time) as string[];
-        const takenStatuses = convertToArray(pill.taken) as boolean[];
+      {nowData?.medications &&
+        nowData?.medications.map((pill, index) => {
+          const times = convertToArray(pill.time) as string[];
+          const takenStatuses = convertToArray(pill.taken) as boolean[];
 
-        return (
-          <PillRow key={index} onClick={() => handleEditTaken()}>
-            <div>{pill.name}</div>
-            <PillTimeContainer>
-              {times.length && takenStatuses.length ? (
-                handleIsTakenPill(times, takenStatuses)
-              ) : (
-                <div>시간 데이터 없음</div>
-              )}
-            </PillTimeContainer>
-          </PillRow>
-        );
-      })}
+          return (
+            <PillRow key={index} onClick={() => handleEditTaken(index)}>
+              <div>{pill.name}</div>
+              <PillTimeContainer>
+                {times.length && takenStatuses.length ? (
+                  handleIsTakenPill(times, takenStatuses)
+                ) : (
+                  <div>시간 데이터 없음</div>
+                )}
+              </PillTimeContainer>
+            </PillRow>
+          );
+        })}
     </PillCheck>
   );
 };

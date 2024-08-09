@@ -7,7 +7,7 @@ import { useCalendar, useDateStore } from '../../store/calendar';
 import CalendarToast from './CalendarToast';
 
 const AddPill = () => {
-  const { addPillData } = useCalendar();
+  const { addMedications } = useCalendar();
   const { setAddTaken, edit } = useDateStore();
   const [pillName, setPillName] = useState<string>('');
   const [alarmTimes, setAlarmTimes] = useState<
@@ -32,7 +32,17 @@ const AddPill = () => {
 
     const times = alarmTimes.map((item) => item.time.format('HH:mm'));
     const taken = alarmTimes.map((item) => item.checked);
-    addPillData({ name: pillName, time: times, taken: taken });
+
+    const medications = [
+      {
+        name: pillName,
+        time: times,
+        taken: taken
+      }
+    ];
+
+    console.log(medications);
+    addMedications(medications);
     setAddTaken(false);
 
     console.log(edit);

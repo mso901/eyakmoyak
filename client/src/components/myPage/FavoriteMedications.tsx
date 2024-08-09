@@ -1,5 +1,5 @@
 import { Icon } from '@iconify-icon/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchMyFavorites, toggleFavoriteApi } from '../../api/favoriteApi';
@@ -7,6 +7,7 @@ import Loading from '../common/Loading';
 import Popup from '../common/popup/Popup';
 import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import Toast from '../common/Toast';
+import InfiniteScroll from '../common/InfiniteScroll';
 
 interface MedicationItem {
   pillid: number;
@@ -23,8 +24,6 @@ const FavoriteMedications = () => {
   const [popupType, setPopupType] = useState(PopupType.None);
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
-  const [hasMore, setHasMore] = useState(true);
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const [toastMessage, setToastMessage] = useState('');
 
   const navigate = useNavigate();
@@ -55,7 +54,6 @@ const FavoriteMedications = () => {
 
         setItems((prevData) => [...prevData, ...temp]);
         setOffset((prevOffset) => prevOffset + temp.length);
-        setHasMore(temp.length === limit);
 
         setItemCount(data.totalCount);
       },
@@ -64,31 +62,6 @@ const FavoriteMedications = () => {
       }
     );
   };
-
-  const handleScroll = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const bottom =
-      container.scrollHeight === container.scrollTop + container.clientHeight;
-
-    if (bottom && !loading && hasMore) {
-      fetchDatas();
-    }
-  }, [loading, hasMore, offset]);
-
-  useEffect(() => {
-    fetchDatas();
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) container.addEventListener('scroll', handleScroll);
-
-    return () => {
-      if (container) container.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
 
   const renderItems = (item: MedicationItem, index: number) => {
     return (
@@ -169,9 +142,13 @@ const FavoriteMedications = () => {
             style={{ color: '#d1d1d1' }}
           />
         </div>
-        <div className='items' ref={containerRef}>
+        <InfiniteScroll
+          className='items'
+          loading={loading && <div>로딩중</div>}
+          onIntersect={() => fetchDatas()}
+        >
           {items.map((item, index) => renderItems(item, index))}
-        </div>
+        </InfiniteScroll>
       </StyledContent>
       {loading && <Loading />}
       {popupType !== PopupType.None && (

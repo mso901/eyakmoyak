@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { styled } from 'styled-components';
-import { useCalendar } from '../../../store/calendar';
 import ChangeTextColor from './ChangeTextColor';
 
 interface TemperatureProps {
@@ -8,14 +6,6 @@ interface TemperatureProps {
 }
 
 const Temperature = ({ temp }: TemperatureProps) => {
-  const { setTemp } = useCalendar();
-
-  useEffect(() => {
-    if (temp !== undefined) {
-      setTemp(temp);
-    }
-  }, [temp, setTemp]);
-
   const handleTemperature = () => {
     if (temp !== undefined) {
       const color =

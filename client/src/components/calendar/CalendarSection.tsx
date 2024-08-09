@@ -6,17 +6,21 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import styled from 'styled-components';
 import { calendarAllGet } from '../../api/calendarApi';
-import { useDateStore } from '../../store/calendar';
+import { useCalendar, useDateStore } from '../../store/calendar';
 import '../../styles/calendar.css';
 
-interface CalendarDate {
+interface CalendarEntry {
   date: string;
-  medications?: [];
-  bloodsugarbefore: number;
-  bloodsugarafter: number;
-  temp: number;
-  weight: number;
-  photo: string;
+  medications?: {
+    name?: string;
+    time?: string[];
+    taken?: boolean[];
+  }[];
+  bloodsugarBefore?: number;
+  bloodsugarAfter?: number;
+  temperature?: number;
+  weight?: number;
+  calImg?: string;
 }
 
 interface TileContentProps {
@@ -26,17 +30,20 @@ interface TileContentProps {
 
 const CalendarSection: React.FC = () => {
   const login = Cookies.get('login');
-  const { value, onChange, edit, addPosted, posted, setPosted, arrow } =
-    useDateStore();
+  const { value, onChange, edit, posted, arrow, resetPosted } = useDateStore();
+  const { calendarEntries, setCalendarEntries } = useCalendar();
   const [postArray, setPostArray] = useState<Set<string>>(new Set());
-  const [calendarData, setData] = useState<CalendarDate[]>([]);
 
   useEffect(() => {
     if (login) {
       const fetchData = async () => {
-        const data: CalendarDate[] = await calendarAllGet();
-        setData(data);
-        console.log(data);
+        const data: CalendarEntry[] = (await calendarAllGet()).map(
+          (entry: any) => ({
+            ...entry,
+            medications: entry.medications ?? []
+          })
+        );
+        setCalendarEntries(data);
         const datesWithMedications = new Set(
           data
             .filter((post) => post.medications && post.medications.length > 0)
@@ -46,20 +53,18 @@ const CalendarSection: React.FC = () => {
       };
 
       fetchData();
+      console.log(posted);
     }
   }, [edit, login, arrow]);
 
   useEffect(() => {
-    const postedDates = new Set(posted.map((item) => item.date));
+    const newPosts = calendarEntries.map((post) => ({
+      date: dayjs(post.date).format('YYYY-MM-DD'),
+      post: true
+    }));
 
-    calendarData.forEach((post) => {
-      const postDate = dayjs(post.date).format('YYYY-MM-DD');
-
-      if (!postedDates.has(postDate)) {
-        addPosted({ date: postDate, post: true });
-      }
-    });
-  }, [calendarData, addPosted, posted, setPosted]);
+    resetPosted(newPosts);
+  }, [calendarEntries, edit]);
 
   const addContent = ({ date, view }: TileContentProps) => {
     if (view === 'month' && postArray.has(date.toDateString())) {
@@ -72,18 +77,18 @@ const CalendarSection: React.FC = () => {
       );
     }
 
-    const healthData = calendarData.find(
+    const healthData = calendarEntries.find(
       (post) => new Date(post.date).toDateString() === date.toDateString()
     );
 
     if (
       view === 'month' &&
       healthData &&
-      (healthData.bloodsugarafter ||
-        healthData.bloodsugarbefore ||
-        healthData.temp ||
+      (healthData.bloodsugarAfter ||
+        healthData.bloodsugarBefore ||
+        healthData.temperature ||
         healthData.weight ||
-        healthData.photo)
+        healthData.calImg)
     ) {
       return (
         <Info

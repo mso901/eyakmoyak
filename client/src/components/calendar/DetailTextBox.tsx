@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useDateStore } from '../../store/calendar';
+import { useCalendar, useDateStore } from '../../store/calendar';
 import Info from '../common/Info';
 import BloodSugar from './calendarDetails/BloodSugar';
 import IsPillTaken from './calendarDetails/IsPillTaken';
@@ -9,11 +9,6 @@ import Weight from './calendarDetails/Weight';
 
 interface DetailTextBoxProps {
   title: string;
-  pillData?: {
-    name?: string;
-    time?: string[];
-    taken?: boolean[];
-  }[];
   bloodsugarbefore?: number;
   bloodsugarafter?: number;
   temp?: number;
@@ -23,7 +18,6 @@ interface DetailTextBoxProps {
 
 const DetailTextBox = ({
   title,
-  pillData,
   bloodsugarbefore,
   bloodsugarafter,
   temp,
@@ -31,6 +25,8 @@ const DetailTextBox = ({
   photo
 }: DetailTextBoxProps) => {
   const { setArrow } = useDateStore();
+
+  const { nowData } = useCalendar();
 
   const handleInfoText = () => {
     switch (title) {
@@ -65,11 +61,10 @@ const DetailTextBox = ({
         return null;
     }
   };
-
   const handleContent = () => {
     switch (title) {
       case '약 복용 여부':
-        return <IsPillTaken pillData={pillData} edit={false} />;
+        return <IsPillTaken edit={false} />;
       case '혈당':
         return (
           <BloodSugar
@@ -91,12 +86,14 @@ const DetailTextBox = ({
   const isPill = title === '약 복용 여부';
 
   const isAllEmpty =
-    (!pillData || pillData.length === 0) &&
-    (bloodsugarbefore === undefined || bloodsugarbefore === 0) &&
-    (bloodsugarafter === undefined || bloodsugarafter === 0) &&
-    (temp === undefined || temp === 0) &&
-    (weight === undefined || weight === 0) &&
-    (!photo || photo === '');
+    !nowData?.medications &&
+    (nowData?.bloodsugarBefore === undefined ||
+      nowData?.bloodsugarBefore === 0) &&
+    (nowData?.bloodsugarAfter === undefined ||
+      nowData?.bloodsugarAfter === 0) &&
+    (nowData?.temperature === undefined || nowData?.temperature === 0) &&
+    (nowData?.weight === undefined || nowData?.weight === 0) &&
+    (!nowData?.calImg || nowData?.calImg === '');
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useCalendar, useDateStore } from '../../store/calendar';
+import { useDateStore } from '../../store/calendar';
 import AddPill from './AddPill';
 import EditCalendarDatail from './EditCalendarDetail';
 import EditPill from './EditPill';
@@ -16,11 +16,9 @@ const CalendarDetail: React.FC = () => {
     editTaken,
     setEditTaken
   } = useDateStore();
-  const { setCalendarData } = useCalendar();
 
   useEffect(() => {
     setEdit(false);
-    setCalendarData(null);
     setAddTaken(false);
     setEditTaken(false);
   }, [value]);

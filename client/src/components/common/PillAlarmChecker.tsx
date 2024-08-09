@@ -40,7 +40,7 @@ const PillAlarmChecker = () => {
         startDate.getDate()
       );
 
-      if (new Date(alarm.startDate ?? '') > nowDate) return;
+      if (startDate > nowDate) return;
 
       let endDate = new Date(alarm.endDate ?? '');
       endDate = new Date(

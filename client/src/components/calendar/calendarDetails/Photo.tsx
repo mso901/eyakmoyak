@@ -1,20 +1,10 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useCalendar } from '../../../store/calendar';
 
 interface photoSrc {
   photo?: string;
 }
 
 const Photo = ({ photo }: photoSrc) => {
-  const { setPhoto } = useCalendar();
-
-  useEffect(() => {
-    if (photo !== undefined) {
-      setPhoto(photo);
-    }
-  }, [photo, setPhoto]);
-
   if (photo !== null) {
     return (
       <PhotoContainer>
