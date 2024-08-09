@@ -274,7 +274,7 @@ const MyMedications = () => {
                 () => {
                   setItems((prevItems) =>
                     prevItems.map((item) =>
-                      item.id === selectedItem?.id ?? ''
+                      item.id === (selectedItem?.id ?? '')
                         ? {
                             ...item,
                             title: name,
