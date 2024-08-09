@@ -55,10 +55,10 @@ const CalendarPage: React.FC = () => {
     try {
       if (isPosted) {
         const res = await calendarPut(formattedDate, formData);
-        console.log(res);
+        setNowData(res);
       } else {
         const res = await calendarPost(formData);
-        console.log(res);
+        setNowData(res);
         addPosted({ date: formattedDate, post: true });
       }
     } catch (err) {

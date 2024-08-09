@@ -30,11 +30,9 @@ interface TileContentProps {
 
 const CalendarSection: React.FC = () => {
   const login = Cookies.get('login');
-  const { value, onChange, edit, addPosted, posted, setPosted, arrow } =
-    useDateStore();
+  const { value, onChange, edit, posted, arrow, resetPosted } = useDateStore();
   const { calendarEntries, setCalendarEntries } = useCalendar();
   const [postArray, setPostArray] = useState<Set<string>>(new Set());
-  const [calendarData, setData] = useState<CalendarEntry[]>([]);
 
   useEffect(() => {
     if (login) {
@@ -45,7 +43,6 @@ const CalendarSection: React.FC = () => {
             medications: entry.medications ?? []
           })
         );
-        setData(data);
         setCalendarEntries(data);
         const datesWithMedications = new Set(
           data
@@ -61,16 +58,13 @@ const CalendarSection: React.FC = () => {
   }, [edit, login, arrow]);
 
   useEffect(() => {
-    const postedDates = new Set(posted.map((item) => item.date));
+    const newPosts = calendarEntries.map((post) => ({
+      date: dayjs(post.date).format('YYYY-MM-DD'),
+      post: true
+    }));
 
-    calendarData.forEach((post) => {
-      const postDate = dayjs(post.date).format('YYYY-MM-DD');
-
-      if (!postedDates.has(postDate)) {
-        addPosted({ date: postDate, post: true });
-      }
-    });
-  }, [calendarData, addPosted, posted, setPosted]);
+    resetPosted(newPosts);
+  }, [calendarEntries, edit]);
 
   const addContent = ({ date, view }: TileContentProps) => {
     if (view === 'month' && postArray.has(date.toDateString())) {
