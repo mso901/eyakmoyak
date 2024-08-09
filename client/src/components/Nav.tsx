@@ -2,6 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import PillAlarmChecker from './PillAlarmChecker';
 import PillExpiredAlarmChecker from './PillExpiredAlarmChecker';
+import { isUserLoggedIn } from '../utils/auth';
+import { useEffect } from 'react';
 
 interface Icon {
   default: string;
@@ -65,6 +67,9 @@ const Nav = () => {
   ];
 
   const { pathname: locationPathname } = useLocation();
+  const isLoggedIn = isUserLoggedIn();
+
+  useEffect(() => {}, [isLoggedIn]);
 
   return (
     <NavContainer>
@@ -78,7 +83,7 @@ const Nav = () => {
               ? !isHomePage && locationPathname.startsWith(navPathname)
               : isHomePage;
           const iconSrc = !isActive ? icon.default : icon.active;
-            const textColor = isActive ? 'var(--secondary-color)' : '#c6c6c6';
+          const textColor = isActive ? 'var(--secondary-color)' : '#c6c6c6';
 
           return (
             <li key={name} style={style}>
@@ -90,8 +95,13 @@ const Nav = () => {
           );
         })}
       </ul>
-      <PillAlarmChecker />
-      <PillExpiredAlarmChecker />
+
+      {isLoggedIn && (
+        <>
+          <PillAlarmChecker />
+          <PillExpiredAlarmChecker />
+        </>
+      )}
     </NavContainer>
   );
 };
@@ -104,7 +114,7 @@ const NavContainer = styled.nav`
   width: 100vw;
   height: 80px;
   background-color: #ffffff;
-  
+
   & ul {
     display: flex;
     justify-content: space-evenly;
