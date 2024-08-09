@@ -38,7 +38,7 @@ const MyMedications = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState('');
-  const { addPills, deletePill, pills } = useMyPillStore();
+  const { addPills, deletePill } = useMyPillStore();
 
   const maxTextLength = 15;
 
