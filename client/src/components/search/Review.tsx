@@ -20,7 +20,7 @@ export interface Review {
 
 const Review = ({ pillId }: { pillId: number }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [nextCursor, setNextCursor] = useState<number | null>(null);
+  const [nextCursor, setNextCursor] = useState<number>(0);
   const [isWritingReview, setIsWritingReview] = useState<boolean>(false);
   const [newReview, setNewReview] = useState<string>('');
   const [reviewCount, setReviewCount] = useState<number>(0);
@@ -28,17 +28,16 @@ const Review = ({ pillId }: { pillId: number }) => {
   const [showToast, setShowToast] = useState<boolean>(false);
 
   const loadReviews = async (pillId: number, cursor: string | null) => {
+    if (nextCursor !== 0 && !cursor) return;
+
     setIsLoading(true);
     try {
       const data = await fetchReviews({ pillId, cursor });
       setReviews((prevReviews) => {
-        const newReviews = data.reviews.filter(
-          (review: Review) => !prevReviews.some((r) => r.id === review.id)
-        );
-        return [...prevReviews, ...newReviews];
+        return [...prevReviews, ...data.reviews];
       });
-      console.log('넥스트:', data.nextCursor);
-      setNextCursor(data.nextCursor || null);
+
+      setNextCursor(data.nextCursor);
     } catch (error) {
       console.error('리뷰 불러오기 에러:', error);
     } finally {
