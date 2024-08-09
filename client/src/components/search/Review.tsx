@@ -236,7 +236,7 @@ const SubmitButton = styled.button`
 `;
 
 const ReviewList = styled.ul`
-  width: 100%;
+  width: 85vw;
 `;
 
 const ReviewItem = styled.li`

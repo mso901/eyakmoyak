@@ -11,6 +11,7 @@ const AlarmSettings = ({ setShowToast }: AlarmProps) => {
   const setCurrentPage = useAlarmStore((state) => state.setCurrentPage);
   const currentAlarm = useAlarmStore((state) => state.currentAlarm);
   const setCurrentAlarm = useAlarmStore((state) => state.setCurrentAlarm);
+  const [alarmNameError, setAlarmNameError] = useState<string>('');
   const [alarmName, setAlarmName] = useState<string>('');
   const [alarmTimes, setAlarmTimes] = useState<{ time: Dayjs }[]>([
     { time: dayjs('09:00', 'HH:mm') },
@@ -57,6 +58,11 @@ const AlarmSettings = ({ setShowToast }: AlarmProps) => {
   };
 
   const handleSave = async () => {
+    if (!alarmName) {
+      setAlarmNameError('약 이름을 입력해주세요.');
+      return;
+    }
+
     const alarmData: Alarm = {
       id: currentAlarm?.id || '',
       name: alarmName,
@@ -93,8 +99,14 @@ const AlarmSettings = ({ setShowToast }: AlarmProps) => {
             <Input
               placeholder='알르레기 약'
               value={alarmName}
-              onChange={(e) => setAlarmName(e.target.value)}
+              onChange={(e) => {
+                setAlarmName(e.target.value);
+                if (e.target.value) {
+                  setAlarmNameError('');
+                }
+              }}
             />
+            {alarmNameError && <ErrorText>{alarmNameError}</ErrorText>}
           </AlarmName>
           <AlarmStartDate>
             <h4>언제부터 약을 드시나요?</h4>
@@ -180,6 +192,12 @@ const SettingList = styled.div`
 `;
 
 const AlarmName = styled.section``;
+
+const ErrorText = styled.p`
+  color: red;
+  font-size: 12px;
+  margin: 5px 0 0 8px;
+`;
 
 const AlarmStartDate = styled.section``;
 
