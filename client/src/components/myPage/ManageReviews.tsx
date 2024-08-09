@@ -163,7 +163,7 @@ const ManageReviews = () => {
             icon='ic:baseline-edit'
             width='1.3rem'
             height='1.3rem'
-            style={{ color: '#d1d1d1' }}
+            style={{ color: deleteItem ? '#72bf44' : '#d1d1d1' }}
           />
         </div>
         <InfiniteScroll
