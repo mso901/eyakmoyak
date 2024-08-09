@@ -14,6 +14,7 @@ interface MyPillState {
   addPill: (pill: Pill) => void;
   addPills: (pills: Pill[]) => void;
   deletePill: (id: string) => void;
+  updatePill: (id: string, pillname:string, expiredat:string,alarmstatus:boolean) => void;
   clearAllPills: () => void;
 
 }
@@ -47,6 +48,15 @@ export const useMyPillStore = create(
       set((state) => ({
         pills: state.pills.filter((pill) => pill.pillid !== id)
       })),
+
+      updatePill: (id: string, pillname:string, expiredat:string,alarmstatus:boolean) =>
+        set((state) => ({
+          pills: state.pills.map((pill) =>
+            pill.pillid === id
+              ? { ...pill, pillname, expiredat, alarmstatus }
+              : pill
+          ),
+        })),
     
       clearAllPills: () => {
         set({ 

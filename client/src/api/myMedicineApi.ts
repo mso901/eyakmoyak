@@ -47,10 +47,12 @@ export const addMyPills = async ( name:string, expiredat:string,alarmstatus:bool
 
   export const updateMyPills = async (
     mypillid:string,
-    name:string, expiredat:string,
+    name:string, 
+    expiredat:string,
+    alarmstatus:boolean,
     onSuccess?:(arg0:any)=>void, onFailure?:(arg0:any)=>void) => {
     try {
-      const data = await put(`/api/mypills/${mypillid}`,  {name:name, expiredat:expiredat} );
+      const data = await put(`/api/mypills/${mypillid}`,  {name, expiredat, alarmstatus} );
       if (onSuccess) onSuccess(data);  
   
     } catch (error) {
