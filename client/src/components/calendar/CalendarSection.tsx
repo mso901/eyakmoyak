@@ -30,7 +30,7 @@ interface TileContentProps {
 
 const CalendarSection: React.FC = () => {
   const login = Cookies.get('login');
-  const { value, onChange, edit, posted, arrow, resetPosted } = useDateStore();
+  const { value, onChange, edit, arrow, resetPosted } = useDateStore();
   const { calendarEntries, setCalendarEntries } = useCalendar();
   const [postArray, setPostArray] = useState<Set<string>>(new Set());
 
@@ -53,7 +53,6 @@ const CalendarSection: React.FC = () => {
       };
 
       fetchData();
-      console.log(posted);
     }
   }, [edit, login, arrow]);
 

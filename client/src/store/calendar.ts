@@ -75,9 +75,6 @@ interface Calendar {
   calendarEntries: CalendarEntry[];
   calImg?: FormData | null;
   setCalendarEntries: (entries: CalendarEntry[]) => void;
-  upsertCalendarEntry: (newEntry: CalendarEntry) => void;
-  removeCalendarEntryByDate: (date: string) => void;
-  setMedications: (medications: CalendarEntry['medications']) => void;
   addMedications: (newMedications: CalendarEntry['medications']) => void;
   updateMedications: (updatedMedications: CalendarEntry['medications']) => void;
   removeMedications: (pillName: string) => void;
@@ -99,38 +96,6 @@ export const useCalendar = create<Calendar>()(
     nowData: null,
 
     setCalendarEntries: (entries) => set({ calendarEntries: entries }),
-
-    upsertCalendarEntry: (newEntry) =>
-      set((state) => {
-        const entryExists = state.calendarEntries.some(
-          (entry) => entry.date === newEntry.date
-        );
-        if (entryExists) {
-          return {
-            calendarEntries: state.calendarEntries.map((entry) =>
-              entry.date === newEntry.date ? newEntry : entry
-            )
-          };
-        } else {
-          return {
-            calendarEntries: [...state.calendarEntries, newEntry]
-          };
-        }
-      }),
-
-    removeCalendarEntryByDate: (date) =>
-      set((state) => ({
-        calendarEntries: state.calendarEntries.filter(
-          (entry) => entry.date !== date
-        )
-      })),
-
-    setMedications: (medications) =>
-      set((state) => ({
-        nowData: state.nowData
-          ? { ...state.nowData, medications }
-          : { date: new Date().toISOString(), medications }
-      })),
 
     addMedications: (newMedications: CalendarEntry['medications']) =>
       set((state) => {
