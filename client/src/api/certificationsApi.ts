@@ -18,7 +18,6 @@ export const registCertifications = async (name:string, date:string, number:stri
         date, 
         btype, 
         number});
-      console.log(res);
       useUserStore.getState().setRole(res.role);
       return res;
     } catch (error) {
