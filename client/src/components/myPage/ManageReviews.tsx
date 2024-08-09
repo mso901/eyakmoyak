@@ -5,7 +5,7 @@ import { fetchUserAllReview, deleteReview } from '../../api/reviewApi';
 import Loading from '../common/Loading';
 import Popup from '../common/popup/Popup';
 import PopupContent, { PopupType } from '../common/popup/PopupMessages';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Toast from '../common/Toast';
 import InfiniteScroll from '../common/InfiniteScroll';
 
@@ -105,11 +105,24 @@ const ManageReviews = () => {
         <div className='title'>
           <div className='title2'>
             <div className='name_ko'>
-              {' '}
-              {item.name.length > maxTextLength
-                ? item.name.substring(0, maxTextLength) + '...'
-                : item.name}
+              <Link
+                to={`/search/name?q=${item.name}`}
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                {item.name.length > maxTextLength
+                  ? item.name.substring(0, maxTextLength) + '...'
+                  : item.name}
+                <Icon
+                  icon='ep:arrow-right-bold'
+                  width='0.8rem'
+                  height='0.8rem'
+                  style={{
+                    color: 'black'
+                  }}
+                />
+              </Link>
             </div>
+
             <div className='name_en'>{item.createdAt}</div>
           </div>
           {deleteItem ? (
@@ -220,7 +233,9 @@ const Item = styled.div`
 
   .name_ko {
     font-weight: bold;
-    font-size: 1em;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
   }
 
   .name_en {
