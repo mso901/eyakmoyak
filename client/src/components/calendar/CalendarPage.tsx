@@ -25,7 +25,7 @@ const CalendarPage: React.FC = () => {
     posted,
     addPosted
   } = useDateStore();
-  const { nowData, photo, upsertCalendarEntry } = useCalendar();
+  const { nowData, photo, upsertCalendarEntry, setNowData } = useCalendar();
   dayjs.locale('ko');
   const days = dayjs(value).format('D일 ddd');
   const formattedDate = dayjs(value).format('YYYY-MM-DD');
@@ -89,7 +89,7 @@ const CalendarPage: React.FC = () => {
               ? URL.createObjectURL(photo.get('file') as Blob)
               : undefined
           };
-          upsertCalendarEntry(newEntry);
+          setNowData(newEntry);
         }
         putData();
         setAddTaken(false);

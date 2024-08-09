@@ -115,16 +115,16 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
   const handleDeleteField = (label: string) => {
     switch (label) {
       case '공복 혈당':
-        setBloodSugarBefore(undefined);
+        setBloodSugarBefore(0);
         break;
       case '식후 혈당':
-        setBloodSugarAfter(undefined);
+        setBloodSugarAfter(0);
         break;
       case '체온':
-        setTemperature(undefined);
+        setTemperature(0);
         break;
       case '체중':
-        setWeight(undefined);
+        setWeight(0);
         break;
       default:
         break;
