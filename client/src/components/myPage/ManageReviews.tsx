@@ -30,6 +30,14 @@ const ManageReviews = () => {
   const navigate = useNavigate();
   const maxTextLength = 15;
 
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '';
+
+    const [datePart] = dateString.split('T');
+    const [year, month, day] = datePart.split('-');
+    return `${year}.${month}.${day}`;
+  };
+
   const fetchDatas = () => {
     setLoading(true);
 
@@ -44,7 +52,7 @@ const ManageReviews = () => {
           id: d.id,
           name: d.name,
           content: d.content,
-          createdAt: new Date(d.createdat).toDateString()
+          createdAt: formatDate(d.createdat)
         }));
         setLoading(false);
 
@@ -155,7 +163,7 @@ const ManageReviews = () => {
             icon='ic:baseline-edit'
             width='1.3rem'
             height='1.3rem'
-            style={{ color: '#d1d1d1' }}
+            style={{ color: deleteItem ? '#72bf44' : '#d1d1d1' }}
           />
         </div>
         <InfiniteScroll
@@ -227,6 +235,10 @@ const Item = styled.div`
     justify-content: space-between;
   }
 
+  .desc {
+    font-size: 0.9rem;
+  }
+
   .title2 {
     justify-content: space-between;
   }
@@ -235,7 +247,6 @@ const Item = styled.div`
     font-weight: bold;
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
   }
 
   .name_en {

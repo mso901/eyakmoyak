@@ -25,14 +25,12 @@ export const fetchUserInformation = async (
 ) => {
   try {
     const data = await get('/api/auth/user-info');
-    console.log(data);
 
     let loginType = LoginType.none;
     if (data.kakaoid !== null) loginType = LoginType.kakao;
     else if (data.naverid !== null) loginType = LoginType.naver;
     else if (data.googleid !== null) loginType = LoginType.google;
 
-    console.log(data);
 
     useUserStore
       .getState()

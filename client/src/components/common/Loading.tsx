@@ -37,7 +37,7 @@ const Overlay = styled.div`
   position: absolute;
   width: 100%;
   height: 80%;
-  z-index: 10;
+  z-index: 990;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +50,7 @@ const AnimationContainer = styled.div`
 const Image = styled.img`
   width: 150px;
   position: relative;
-  z-index: 10;
+  z-index: 1000;
 `;
 
 const LoadingBottom = styled.div`
@@ -60,7 +60,7 @@ const LoadingBottom = styled.div`
   position: relative;
   left: 3px;
   top: -30px;
-  z-index: 5;
+  z-index: 995;
   border-bottom-left-radius: 44%;
   border-bottom-right-radius: 44%;
 
@@ -76,6 +76,7 @@ const Text = styled.div`
   font-size: 14pt;
   color: #6f6f6f;
   line-height: 25px;
+  z-index: 9999;
 `;
 
 export default Loading;

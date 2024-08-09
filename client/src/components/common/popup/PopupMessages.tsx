@@ -42,6 +42,7 @@ export enum PopupType {
   DeleteMyPill, // src\components\myPage\MyMedications.tsx
   DeleteMyPillSuccess,
   DeleteMyPillFailure,
+  ExpiredMedNotice,
 
   AddMyPill, // src\components\myPage\MyMedications.tsx
   AddMyPillSuccess,

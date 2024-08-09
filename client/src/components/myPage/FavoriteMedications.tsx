@@ -29,6 +29,14 @@ const FavoriteMedications = () => {
   const navigate = useNavigate();
   const maxTextLength = 15;
 
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '';
+
+    const [datePart] = dateString.split('T');
+    const [year, month, day] = datePart.split('-');
+    return `${year}.${month}.${day}`;
+  };
+
   const fetchDatas = () => {
     setLoading(true);
 
@@ -42,7 +50,7 @@ const FavoriteMedications = () => {
         const temp: MedicationItem[] = favorites.map((d: any) => ({
           pillid: Number(d.pillid),
           title: d.name,
-          registrationDate: new Date(d.createdat).toDateString(),
+          registrationDate: formatDate(d.createdat),
           tags:
             d.importantWords === ''
               ? []
@@ -139,7 +147,7 @@ const FavoriteMedications = () => {
             icon='ic:baseline-edit'
             width='1.3rem'
             height='1.3rem'
-            style={{ color: '#d1d1d1' }}
+            style={{ color: deleteItem ? '#72bf44' : '#d1d1d1' }}
           />
         </div>
         <InfiniteScroll
@@ -202,14 +210,13 @@ const Item = styled.div`
   .title {
     display: flex;
     font-weight: bold;
-    font-size: 1.2em;
     justify-content: space-between;
+    font-size: 0.9rem;
   }
 
   .title2 {
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
   }
 
   .registration {

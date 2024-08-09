@@ -71,7 +71,6 @@ const EditPassword = () => {
       () => {
         setLoading(false);
         setPopupType(PopupType.changePasswordSuccess);
-        console.log(`비밀번호 변경 완료`);
       },
       (error) => {
         setLoading(false);

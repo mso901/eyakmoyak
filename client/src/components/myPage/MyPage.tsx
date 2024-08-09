@@ -8,7 +8,7 @@ import FavoriteMedications from './FavoriteMedications';
 import ManageReviews from './ManageReviews';
 import MyInformation from './MyInformation';
 import MyMedications from './MyMedications';
-import Seo from '../common/Seo'
+import Seo from '../common/Seo';
 
 import { Icon } from '@iconify-icon/react';
 import { useState } from 'react';
@@ -257,7 +257,7 @@ const MyPage = () => {
 
   return (
     <>
-      <Seo title={ '마이페이지'} />
+      <Seo title={'마이페이지'} />
       <MyPageContainer>
         <Header />
         {renderContent()}
@@ -335,7 +335,7 @@ const StyledContent = styled.div`
       margin-bottom: 10px;
       padding-left: 10px;
       padding-right: 10px;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
   }
 `;
