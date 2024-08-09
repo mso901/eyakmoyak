@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { calendarPost, calendarPut } from '../../api/calendarApi';
+import { calendarGet, calendarPost, calendarPut } from '../../api/calendarApi';
 import { useCalendar, useDateStore } from '../../store/calendar';
 import Layout from '../common/Layout';
 import Seo from '../common/Seo';
@@ -38,11 +38,19 @@ const CalendarPage: React.FC = () => {
   const isPosted = posted.some((item) => item.date === formattedDate);
 
   useEffect(() => {
-    const now = dayjs().toDate();
+    onChange(dayjs().toDate());
+    const getTodayData = async () => {
+      try {
+        const res = await calendarGet(dayjs().format('YYYY-MM-DD'));
+        setNowData(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getTodayData();
     setEdit(false);
     setArrow(false);
     setAddTaken(false);
-    onChange(now);
   }, []);
 
   const formData = new FormData();

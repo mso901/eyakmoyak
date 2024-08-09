@@ -19,7 +19,6 @@ const OpenCalendarDetail: React.FC = () => {
   const [popupType, setPopupType] = useState<PopupType>(PopupType.None);
 
   useEffect(() => {
-    console.log(formattedDate);
     const getTodayData = async () => {
       try {
         const res = await calendarGet(formattedDate);
