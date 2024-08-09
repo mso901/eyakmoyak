@@ -7,6 +7,7 @@ import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import Loading from '../common/Loading';
 import Popup from '../common/popup/Popup';
 import ValidationError from '../common/ValidationError';
+import Seo from '../common/Seo'
 
 const ResetPasswordRequest = () => {
   const navigate = useNavigate();
@@ -46,68 +47,71 @@ const ResetPasswordRequest = () => {
   };
 
   return (
-    <Overlay>
-      <Icon
-        className='topClose'
-        onClick={() => {
-          navigate(-1);
-        }}
-        icon='material-symbols:close'
-        width='1.7rem'
-        height='1.7rem'
-        style={{ color: 'black' }}
-      />
+    <>
+      <Seo title='비밀번호 찾기'/>
+      <Overlay>
+        <Icon
+          className='topClose'
+          onClick={() => {
+            navigate(-1);
+          }}
+          icon='material-symbols:close'
+          width='1.7rem'
+          height='1.7rem'
+          style={{ color: 'black' }}
+        />
 
-      <Content>
-        <Logo src='/img/logo_not_chicken.svg' alt='이약뭐약' />
-        <div className='title'>
-          비밀번호를 찾기위해 <br /> 가입하신 이메일 주소를 입력해주세요.
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className='login-inputs'>
-            <div className='input-container'>
-              <input
-                type='email'
-                name='email'
-                placeholder='이메일 주소'
-                value={email}
-                onChange={handleChange}
-                required
-                onBlur={() => setBlur(true)}
-              />
-              <Icon
-                className='input-left-btn'
-                icon='pajamas:clear'
-                width='1rem'
-                height='1rem'
-                style={{
-                  color: 'gray',
-                  display: email.trim().length > 0 ? '' : 'none'
-                }}
-                onClick={() => setEmail('')}
-              />
-            </div>
+        <Content>
+          <Logo src='/img/logo/big_chick.svg' alt='이약뭐약' />
+          <div className='title'>
+            비밀번호를 찾기위해 <br /> 가입하신 이메일 주소를 입력해주세요.
           </div>
-          <ValidationError condition={isEmailInvalid()}>
-            이메일 형식이 올바르지않습니다.
-          </ValidationError>
+          <form onSubmit={handleSubmit}>
+            <div className='login-inputs'>
+              <div className='input-container'>
+                <input
+                  type='email'
+                  name='email'
+                  placeholder='이메일 주소'
+                  value={email}
+                  onChange={handleChange}
+                  required
+                  onBlur={() => setBlur(true)}
+                />
+                <Icon
+                  className='input-left-btn'
+                  icon='pajamas:clear'
+                  width='1rem'
+                  height='1rem'
+                  style={{
+                    color: 'gray',
+                    display: email.trim().length > 0 ? '' : 'none'
+                  }}
+                  onClick={() => setEmail('')}
+                />
+              </div>
+            </div>
+            <ValidationError condition={isEmailInvalid()}>
+              이메일 형식이 올바르지않습니다.
+            </ValidationError>
 
-          <button
-            className='submitButton'
-            disabled={!(email.trim().length > 0)}
-            type='submit'
-          >
-            다음
-          </button>
-        </form>
-      </Content>
-      {loading && <Loading />}
-      {popupType !== PopupType.None && (
-        <Popup onClose={() => setPopupType(PopupType.None)}>
-          {PopupContent(popupType, navigate)}
-        </Popup>
-      )}
-    </Overlay>
+            <button
+              className='submitButton'
+              disabled={!(email.trim().length > 0)}
+              type='submit'
+            >
+              다음
+            </button>
+          </form>
+        </Content>
+        {loading && <Loading />}
+        {popupType !== PopupType.None && (
+          <Popup onClose={() => setPopupType(PopupType.None)}>
+            {PopupContent(popupType, navigate)}
+          </Popup>
+        )}
+      </Overlay>
+    </>
   );
 };
 
@@ -137,7 +141,7 @@ const Overlay = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 80px;
+  width: 120px;
   cursor: pointer;
   margin-bottom: 20px;
 `;
@@ -153,7 +157,7 @@ const Content = styled.div`
   width:100%;
 
   .title{
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     text-align: center;
     font-weight:500;
   }
@@ -223,6 +227,6 @@ const Content = styled.div`
 .submitButton:disabled{
   background-color: #C7C7C7;
 }
-}`;
+`;
 
 export default ResetPasswordRequest;

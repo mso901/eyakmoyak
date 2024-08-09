@@ -1,6 +1,6 @@
 import { Icon } from '@iconify-icon/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { requestEmailVerification, signup } from '../../api/authService';
 import Loading from '../common/Loading';
@@ -288,7 +288,9 @@ const Register = () => {
       />
 
       <Content>
-        <Logo src='/img/logo_not_chicken.svg' alt='이약뭐약' />
+        <Link to='/'>
+          <Logo src='/img/logo/big_chick.svg' alt='이약뭐약' />
+        </Link>
         <div className='title'>
           간편하게 가입하고 <br /> 다양한 서비스를 이용하세요.
         </div>
@@ -359,7 +361,7 @@ const Overlay = styled.div`
 `;
 
 const Logo = styled.img`
-  height: 80px;
+  width: 100px;
   cursor: pointer;
   margin-bottom: 20px;
 `;
@@ -380,8 +382,9 @@ const Content = styled.div`
   }
 
   .title {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     text-align: center;
+    font-style: 14px;
     font-weight: 500;
   }
 
@@ -417,9 +420,9 @@ const Content = styled.div`
 
   .input-left-btn {
     position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+    top: 10%;
+    right: 0;
+    transform: translatex(30%);
     cursor: pointer;
   }
 

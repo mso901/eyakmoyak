@@ -1,4 +1,5 @@
 import { Icon } from '@iconify-icon/react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SnsLogin = ({
@@ -38,7 +39,8 @@ const SnsLogin = ({
 
   return (
     <Content>
-      <Logo src='/img/logo.svg' alt='이약뭐약' />
+      <Link to ='/'>
+      <Logo src='/img/logo/aside_chick.svg' alt='이약뭐약' /></Link>
       <div className='bubble'>⚡ 3초만에 빠른 회원가입</div>
       {SNS_LOGINS.map((sns) => {
         const { name, iconSize, label, ...rest } = sns;
@@ -67,7 +69,7 @@ const SnsLogin = ({
 };
 
 const Logo = styled.img`
-  height: 80px;
+  height: 75px;
   cursor: pointer;
   margin-bottom: 20px;
 `;

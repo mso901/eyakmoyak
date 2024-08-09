@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify-icon/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { resetPassword } from '../../api/authService';
@@ -7,7 +7,7 @@ import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import Loading from '../common/Loading';
 import Popup from '../common/popup/Popup';
 import ValidationError from '../common/ValidationError';
-import Seo from '../common/Seo'
+import Seo from '../common/Seo';
 
 interface FormData {
   newPassword: string;
@@ -174,7 +174,7 @@ const ResetPasswordRequest = () => {
 
   return (
     <>
-      <Seo title={'비밀번호 재설정' } />
+      <Seo title={'비밀번호 재설정'} />
       <Overlay>
         <Icon
           className='topClose'
@@ -188,7 +188,9 @@ const ResetPasswordRequest = () => {
         />
 
         <Content>
-          <Logo src='/img/logo_not_chicken.svg' alt='이약뭐약' />
+          <Link to='/'>
+            <Logo src='/img/logo/big_chick.svg' alt='이약뭐약' />
+          </Link>
           <div className='title'>새로운 비밀번호를 입력해주세요.</div>
           <form onSubmit={handleSubmit}>
             <div className='login-inputs'>
@@ -357,6 +359,6 @@ const Content = styled.div`
 .submitButton:disabled{
   background-color: #C7C7C7;
 }
-}`;
+`;
 
 export default ResetPasswordRequest;
