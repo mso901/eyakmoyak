@@ -15,7 +15,6 @@ const AuthenticatedRoute = ({
     const checkAuthentication = async () => {
       try {
         const login = Cookies.get('login');
-        console.log(login);
 
         if (login) {
           setIsAuthenticated(true);

@@ -36,12 +36,10 @@ api.interceptors.response.use(
 
       try {
         const res = await refreshAuthToken();
-        console.log('토큰 갱신 성공:', res);
         Cookies.set('login', res);
 
         return api(originalRequest); // 원래 요청 다시 시도
       } catch (err) {
-        console.error('토큰 갱신 실패:', err);
         Cookies.remove('login');
         return Promise.reject(err);
       }

@@ -35,7 +35,6 @@ const ChatBotBox: React.FC = () => {
 
     try {
       const res = await chatBot(text);
-      console.log('챗봇 대답', res);
       const formattedRes = res
         .replace(/\n/g, '<br />')
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
