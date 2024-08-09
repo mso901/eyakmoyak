@@ -210,14 +210,13 @@ const Item = styled.div`
   .title {
     display: flex;
     font-weight: bold;
-    font-size: 1.2em;
     justify-content: space-between;
+    font-size: 0.9rem;
   }
 
   .title2 {
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
   }
 
   .registration {

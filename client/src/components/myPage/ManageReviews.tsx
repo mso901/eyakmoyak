@@ -235,6 +235,10 @@ const Item = styled.div`
     justify-content: space-between;
   }
 
+  .desc {
+    font-size: 0.9rem;
+  }
+
   .title2 {
     justify-content: space-between;
   }
@@ -243,7 +247,6 @@ const Item = styled.div`
     font-weight: bold;
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
   }
 
   .name_en {

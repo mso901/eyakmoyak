@@ -423,7 +423,7 @@ const Item = styled.div`
   .title {
     display: flex;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 0.9rem;
     justify-content: space-between;
   }
 
