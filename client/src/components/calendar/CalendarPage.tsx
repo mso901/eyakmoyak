@@ -25,7 +25,7 @@ const CalendarPage: React.FC = () => {
     posted,
     addPosted
   } = useDateStore();
-  const { nowData, photo, upsertCalendarEntry, setNowData } = useCalendar();
+  const { nowData, photo, setNowData } = useCalendar();
   dayjs.locale('ko');
   const days = dayjs(value).format('D일 ddd');
   const formattedDate = dayjs(value).format('YYYY-MM-DD');
@@ -53,15 +53,13 @@ const CalendarPage: React.FC = () => {
 
   const putData = async () => {
     try {
-      let res;
-
       if (isPosted) {
-        res = await calendarPut(formattedDate, formData);
-        upsertCalendarEntry(res);
+        const res = await calendarPut(formattedDate, formData);
+        console.log(res);
       } else {
-        res = await calendarPost(formData);
+        const res = await calendarPost(formData);
+        console.log(res);
         addPosted({ date: formattedDate, post: true });
-        upsertCalendarEntry(res);
       }
     } catch (err) {
       console.error('수정 에러:', err);
