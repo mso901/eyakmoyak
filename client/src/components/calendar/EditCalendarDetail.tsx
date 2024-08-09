@@ -14,7 +14,7 @@ const ContentContainer = styled.div`
 
 const OpenCalendarDetail: React.FC = () => {
   const { value, setEdit, setArrow, removePostedByDate } = useDateStore();
-  const { setCalendarData, setCalImg } = useCalendar();
+  const { setCalImg, removeCalendarEntryByDate } = useCalendar();
   const formattedDate = dayjs(value).format('YYYY-MM-DD');
   const [popupType, setPopupType] = useState<PopupType>(PopupType.None);
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ const OpenCalendarDetail: React.FC = () => {
       const res = await calendarDelete(formattedDate);
       setEdit(false);
       setArrow(false);
-      setCalendarData(null);
-      setCalImg(new FormData());
+      removeCalendarEntryByDate(formattedDate);
+      setCalImg('');
       removePostedByDate(formattedDate);
       setPopupType(PopupType.DeleteData);
       console.log(res);

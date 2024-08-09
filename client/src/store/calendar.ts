@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 interface Store {
   value: Date | null;
@@ -7,6 +8,8 @@ interface Store {
   setEdit: (edit: boolean) => void;
   arrow: boolean;
   setArrow: (arrow: boolean) => void;
+  index: number;
+  setIndex: (index: number) => void;
   editTaken: boolean;
   setEditTaken: (editTaken: boolean) => void;
   addTaken: boolean;
@@ -24,6 +27,8 @@ export const useDateStore = create<Store>((set) => ({
   setEdit: (edit) => set({ edit }),
   arrow: false,
   setArrow: (arrow) => set({ arrow }),
+  index: 0,
+  setIndex: (index) => set({ index }),
   editTaken: false,
   setEditTaken: (editTaken) => set({ editTaken }),
   addTaken: false,
@@ -52,120 +57,180 @@ export const useDateStore = create<Store>((set) => ({
     }))
 }));
 
-interface PillData {
-  name?: string | null;
-  time?: string | string[];
-  taken?: boolean | boolean[];
-}
-
-interface CalendarData {
-  pillData?: PillData[];
-  bloodsugarbefore?: number | null;
-  bloodsugarafter?: number | null;
-  temp?: number | null;
-  weight?: number | null;
-  photo?: string | null;
+interface CalendarEntry {
+  date: string;
+  medications?: {
+    name?: string;
+    time?: string[];
+    taken?: boolean[];
+  }[];
+  bloodsugarBefore?: number;
+  bloodsugarAfter?: number;
+  temperature?: number;
+  weight?: number;
+  calImg?: string;
 }
 
 interface Calendar {
-  calendarData: CalendarData | null;
+  calendarEntries: CalendarEntry[];
   calImg?: FormData | null;
-  setCalendarData: (calendarData: CalendarData | null) => void;
-  setPillData: (pillData: PillData[] | null) => void;
-  addPillData: (newPillData: PillData) => void;
-  updatePillData: (newPillData: PillData) => void;
-  removePillData: (pillName: string) => void;
-  setBloodSugarBefore: (bloodsugarbefore: number | null) => void;
-  setBloodSugarAfter: (bloodsugarafter: number | null) => void;
-  setTemp: (temp: number | null) => void;
-  setWeight: (weight: number | null) => void;
-  setPhoto: (photo: string | null) => void;
-  setCalImg: (calImg: FormData) => void;
+  setCalendarEntries: (entries: CalendarEntry[]) => void;
+  upsertCalendarEntry: (newEntry: CalendarEntry) => void;
+  removeCalendarEntryByDate: (date: string) => void;
+  setMedications: (medications: CalendarEntry['medications']) => void;
+  addMedications: (newMedications: CalendarEntry['medications']) => void;
+  updateMedications: (updatedMedications: CalendarEntry['medications']) => void;
+  removeMedications: (pillName: string) => void;
+  setBloodSugarBefore: (bloodsugarBefore: number | undefined) => void;
+  setBloodSugarAfter: (bloodsugarAfter: number | undefined) => void;
+  setTemperature: (temperature: number | undefined) => void;
+  setWeight: (weight: number | undefined) => void;
+  setCalImg: (calImg: string | undefined) => void;
+  photo: FormData | null;
+  setPhoto: (photo: FormData) => void;
+  nowData: CalendarEntry | null;
+  setNowData: (data: CalendarEntry | null) => void;
 }
 
-export const useCalendar = create<Calendar>((set) => ({
-  calendarData: null,
-  setCalendarData: (calendarData) => set({ calendarData }),
+export const useCalendar = create<Calendar>()(
+  devtools((set) => ({
+    calendarEntries: [],
+    calImg: null,
+    nowData: null,
 
-  setPillData: (pillData) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        pillData: pillData || []
-      }
-    })),
+    setCalendarEntries: (entries) => set({ calendarEntries: entries }),
 
-  addPillData: (newPillData) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        pillData: [...(state.calendarData?.pillData || []), newPillData]
-      }
-    })),
+    upsertCalendarEntry: (newEntry) =>
+      set((state) => {
+        const entryExists = state.calendarEntries.some(
+          (entry) => entry.date === newEntry.date
+        );
+        if (entryExists) {
+          return {
+            calendarEntries: state.calendarEntries.map((entry) =>
+              entry.date === newEntry.date ? newEntry : entry
+            )
+          };
+        } else {
+          return {
+            calendarEntries: [...state.calendarEntries, newEntry]
+          };
+        }
+      }),
 
-  updatePillData: (newPillData) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        pillData: state.calendarData?.pillData?.map((pill) =>
-          pill.name === newPillData.name ? newPillData : pill
-        ) || [newPillData]
-      }
-    })),
-
-  removePillData: (pillName) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        pillData: state.calendarData?.pillData?.filter(
-          (pill) => pill.name !== pillName
+    removeCalendarEntryByDate: (date) =>
+      set((state) => ({
+        calendarEntries: state.calendarEntries.filter(
+          (entry) => entry.date !== date
         )
-      }
-    })),
+      })),
 
-  setBloodSugarBefore: (bloodsugarbefore) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        bloodsugarbefore
-      }
-    })),
+    setMedications: (medications) =>
+      set((state) => ({
+        nowData: state.nowData
+          ? { ...state.nowData, medications }
+          : { date: new Date().toISOString(), medications }
+      })),
 
-  setBloodSugarAfter: (bloodsugarafter) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        bloodsugarafter
-      }
-    })),
+    addMedications: (newMedications: CalendarEntry['medications']) =>
+      set((state) => {
+        const updatedMedications = Array.isArray(newMedications)
+          ? newMedications
+          : [];
 
-  setTemp: (temp) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        temp
-      }
-    })),
+        if (state.nowData) {
+          const updatedData = {
+            ...state.nowData,
+            medications: [
+              ...(state.nowData.medications || []),
+              ...updatedMedications
+            ]
+          };
+          return { nowData: updatedData };
+        } else {
+          const newEntry: CalendarEntry = {
+            date: new Date().toISOString(),
+            medications: updatedMedications
+          };
+          return { nowData: newEntry };
+        }
+      }),
 
-  setWeight: (weight) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        weight
-      }
-    })),
+    updateMedications: (updatedMedications: CalendarEntry['medications']) =>
+      set((state) => {
+        if (state.nowData) {
+          const existingMedications = state.nowData.medications || [];
+          const updatedEntry = {
+            ...state.nowData,
+            medications: existingMedications.map((medication) => {
+              const updatedMedication =
+                updatedMedications &&
+                updatedMedications.find((med) => med.name === medication.name);
+              return updatedMedication
+                ? { ...medication, ...updatedMedication }
+                : medication;
+            })
+          };
+          return { nowData: updatedEntry };
+        }
+        return state;
+      }),
 
-  setPhoto: (photo) =>
-    set((state) => ({
-      calendarData: {
-        ...state.calendarData,
-        photo
-      }
-    })),
+    removeMedications: (pillName: string) =>
+      set((state) => {
+        if (state.nowData) {
+          const filteredMedications = (state.nowData.medications || []).filter(
+            (medication) => medication.name !== pillName
+          );
+          return {
+            nowData: { ...state.nowData, medications: filteredMedications }
+          };
+        }
+        return state;
+      }),
 
-  calImg: null,
-  setCalImg: (formData) =>
-    set(() => ({
-      calImg: formData
-    }))
-}));
+    setBloodSugarBefore: (bloodsugarBefore) =>
+      set((state) => ({
+        nowData: state.nowData
+          ? { ...state.nowData, bloodsugarBefore }
+          : { date: new Date().toISOString(), bloodsugarBefore }
+      })),
+
+    setBloodSugarAfter: (bloodsugarAfter) =>
+      set((state) => ({
+        nowData: state.nowData
+          ? { ...state.nowData, bloodsugarAfter }
+          : { date: new Date().toISOString(), bloodsugarAfter }
+      })),
+
+    setTemperature: (temperature) =>
+      set((state) => ({
+        nowData: state.nowData
+          ? { ...state.nowData, temperature }
+          : { date: new Date().toISOString(), temperature }
+      })),
+
+    setWeight: (weight) =>
+      set((state) => ({
+        nowData: state.nowData
+          ? { ...state.nowData, weight }
+          : { date: new Date().toISOString(), weight }
+      })),
+
+    setCalImg: (calImg) =>
+      set((state) => ({
+        nowData: state.nowData
+          ? { ...state.nowData, calImg }
+          : { date: new Date().toISOString(), calImg }
+      })),
+
+    setNowData: (data) => set({ nowData: data }),
+
+    photo: null,
+    setPhoto: (formData: FormData) => {
+      set({
+        photo: formData
+      });
+    }
+  }))
+);

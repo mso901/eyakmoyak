@@ -10,8 +10,8 @@ import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import CalendarToast from './CalendarToast';
 
 const EditPill = () => {
-  const { updatePillData, calendarData, removePillData } = useCalendar();
-  const { edit, setEditTaken } = useDateStore();
+  const { updateMedications, nowData, removeMedications } = useCalendar();
+  const { edit, setEditTaken, index } = useDateStore();
   const [pillName, setPillName] = useState<string>('');
   const [alarmTimes, setAlarmTimes] = useState<
     { time: Dayjs; status: string; checked: boolean }[]
@@ -23,8 +23,8 @@ const EditPill = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (calendarData?.pillData?.length) {
-      const pillData = calendarData.pillData[0];
+    if (nowData?.medications?.length) {
+      const pillData = nowData.medications[index];
       setPillName(pillData.name ?? '');
 
       const timesArray = Array.isArray(pillData.time) ? pillData.time : [];
@@ -38,7 +38,7 @@ const EditPill = () => {
 
       setAlarmTimes(initialTimes);
     }
-  }, [calendarData]);
+  }, [nowData]);
 
   const handleSaveEditedPill = () => {
     if (!pillName) {
@@ -52,7 +52,16 @@ const EditPill = () => {
 
     const times = alarmTimes.map((item) => item.time.format('HH:mm'));
     const taken = alarmTimes.map((item) => item.checked);
-    updatePillData({ name: pillName, time: times, taken: taken });
+
+    const medications = [
+      {
+        name: pillName,
+        time: times,
+        taken: taken
+      }
+    ];
+
+    updateMedications(medications);
     setEditTaken(false);
 
     console.log(edit);
@@ -88,7 +97,7 @@ const EditPill = () => {
   };
 
   const handleDeletePillData = () => {
-    removePillData(pillName);
+    removeMedications(pillName);
     setEditTaken(false);
   };
 

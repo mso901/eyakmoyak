@@ -1,40 +1,97 @@
 import { Icon } from '@iconify-icon/react';
 import dayjs from 'dayjs';
 import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useDateStore } from '../../store/calendar';
+import { calendarPost, calendarPut } from '../../api/calendarApi';
+import { useCalendar, useDateStore } from '../../store/calendar';
 import Layout from '../common/Layout';
+import Seo from '../common/Seo';
 import Popup from '../common/popup/Popup';
 import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import CalendarDetail from './CalendarDetail';
 import CalendarSection from './CalendarSection';
 import CalendarToast from './CalendarToast';
-import Seo from '../common/Seo';
 
 const CalendarPage: React.FC = () => {
-  const { value, arrow, setArrow, edit, setEdit, setAddTaken, onChange } =
-    useDateStore();
+  const {
+    value,
+    arrow,
+    setArrow,
+    edit,
+    setEdit,
+    setAddTaken,
+    posted,
+    addPosted
+  } = useDateStore();
+  const { nowData, photo, upsertCalendarEntry } = useCalendar();
   dayjs.locale('ko');
-  const today = dayjs();
   const days = dayjs(value).format('D일 ddd');
+  const formattedDate = dayjs(value).format('YYYY-MM-DD');
   const login = Cookies.get('login');
   const [maxTime, setMaxTime] = useState<boolean>(false);
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>(PopupType.None);
+  const isPosted = posted.some((item) => item.date === formattedDate);
 
-  useEffect(() => {
-    setAddTaken(false);
-    setEdit(false);
-    setArrow(false);
-    onChange(today.toDate());
-  }, [onChange]);
+  const formData = new FormData();
+  formData.append('date', formattedDate);
+  formData.append(
+    'bloodsugarBefore',
+    (nowData?.bloodsugarBefore ?? 0).toString()
+  );
+  formData.append(
+    'bloodsugarAfter',
+    (nowData?.bloodsugarAfter ?? 0).toString()
+  );
+  formData.append('medications', JSON.stringify(nowData?.medications ?? []));
+  formData.append('temperature', (nowData?.temperature ?? 0).toString());
+  formData.append('weight', (nowData?.weight ?? 0).toString());
+  formData.append('calImg', photo?.get('file') as Blob);
+
+  const putData = async () => {
+    try {
+      let res;
+
+      if (isPosted) {
+        res = await calendarPut(formattedDate, formData);
+        upsertCalendarEntry(res);
+      } else {
+        res = await calendarPost(formData);
+        addPosted({ date: formattedDate, post: true });
+        upsertCalendarEntry(res);
+      }
+    } catch (err) {
+      console.error('수정 에러:', err);
+    }
+  };
 
   const openEdit = (open: boolean) => {
     if (login) {
-      if (!open) {
+      if (open === false) {
+        if (nowData && !isPosted) {
+          const newEntry = {
+            date: formattedDate,
+            medications: nowData?.medications?.map((pill) => ({
+              name: pill.name || '',
+              time: Array.isArray(pill.time) ? pill.time : [pill.time || ''],
+              taken: Array.isArray(pill.taken)
+                ? pill.taken
+                : [pill.taken || false]
+            })),
+            bloodsugarBefore: nowData?.bloodsugarBefore || 0,
+            bloodsugarAfter: nowData?.bloodsugarAfter || 0,
+            temperature: nowData?.temperature || 0,
+            weight: nowData?.weight || 0,
+            calImg: photo?.get('file')
+              ? URL.createObjectURL(photo.get('file') as Blob)
+              : undefined
+          };
+          upsertCalendarEntry(newEntry);
+        }
+        putData();
         setAddTaken(false);
         setEdit(false);
         setMaxTime(true);

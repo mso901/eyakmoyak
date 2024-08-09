@@ -4,32 +4,19 @@ import { useCalendar, useDateStore } from '../../store/calendar';
 import EditDetailPhoto from './EditDetailPhoto';
 import IsPillTaken from './calendarDetails/IsPillTaken';
 
-interface CalendarData {
-  bloodsugarbefore: number | null;
-  bloodsugarafter: number | null;
-  temp: number | null;
-  weight: number | null;
-  pillData?: [];
-}
-
 interface EditDetailTextBoxProps {
   title: string;
 }
 
 const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
   const {
-    calendarData,
+    nowData,
     setBloodSugarAfter,
     setBloodSugarBefore,
-    setTemp,
+    setTemperature,
     setWeight
-  } = useCalendar() as {
-    calendarData: CalendarData;
-    setBloodSugarAfter: (value: number | null) => void;
-    setBloodSugarBefore: (value: number | null) => void;
-    setTemp: (value: number | null) => void;
-    setWeight: (value: number | null) => void;
-  };
+  } = useCalendar();
+
   const { setAddTaken } = useDateStore();
 
   const renderSimpleInput = (
@@ -66,7 +53,7 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
         return (
           <UnitContainer>
             <PillCheck>
-              <IsPillTaken pillData={calendarData?.pillData} edit={true} />
+              <IsPillTaken edit={true} />
             </PillCheck>
           </UnitContainer>
         );
@@ -75,15 +62,15 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
           <TextContainer>
             {renderSimpleInput(
               '공복 혈당',
-              calendarData?.bloodsugarbefore,
-              (e) => setBloodSugarBefore(parseInt(e.target.value) || null),
+              nowData?.bloodsugarBefore ?? null,
+              (e) => setBloodSugarBefore(parseInt(e.target.value)),
               'mg/dL',
               handleDeleteField
             )}
             {renderSimpleInput(
               '식후 혈당',
-              calendarData?.bloodsugarafter,
-              (e) => setBloodSugarAfter(parseInt(e.target.value) || null),
+              nowData?.bloodsugarAfter ?? null,
+              (e) => setBloodSugarAfter(parseInt(e.target.value)),
               'mg/dL',
               handleDeleteField
             )}
@@ -94,8 +81,8 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
           <>
             {renderSimpleInput(
               '체온',
-              calendarData?.temp,
-              (e) => setTemp(parseFloat(e.target.value) || null),
+              nowData?.temperature ?? null,
+              (e) => setTemperature(parseFloat(e.target.value)),
               '°C',
               handleDeleteField
             )}
@@ -107,8 +94,8 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
           <>
             {renderSimpleInput(
               '체중',
-              calendarData?.weight,
-              (e) => setWeight(parseFloat(e.target.value) || null),
+              nowData?.weight ?? null,
+              (e) => setWeight(parseFloat(e.target.value)),
               'kg',
               handleDeleteField
             )}
@@ -128,21 +115,20 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
   const handleDeleteField = (label: string) => {
     switch (label) {
       case '공복 혈당':
-        setBloodSugarBefore(null);
+        setBloodSugarBefore(undefined);
         break;
       case '식후 혈당':
-        setBloodSugarAfter(null);
+        setBloodSugarAfter(undefined);
         break;
       case '체온':
-        setTemp(null);
+        setTemperature(undefined);
         break;
       case '체중':
-        setWeight(null);
+        setWeight(undefined);
         break;
       default:
         break;
     }
-    console.log(`Deleted ${label}:`, calendarData);
   };
 
   const isPill = title === '약 복용 여부';
@@ -161,7 +147,7 @@ const EditDetailTextBox = ({ title }: EditDetailTextBoxProps) => {
       </ContentTitle>
       {handleContent(title)}
       {isPill &&
-      (!calendarData?.pillData || calendarData?.pillData.length === 0) ? (
+      (!nowData?.medications || nowData?.medications.length === 0) ? (
         <div
           style={{
             textAlign: 'center',

@@ -7,7 +7,7 @@ import { useCalendar } from '../../store/calendar';
 const EditDetailPhoto = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
-  const { setPhoto, setCalImg, calendarData } = useCalendar();
+  const { setPhoto, nowData, setCalImg } = useCalendar();
 
   const [isDeniedCameraPermission, setIsDeniedCameraPermission] =
     useState(false);
@@ -57,15 +57,15 @@ const EditDetailPhoto = () => {
       formData.append('file', file);
       const imageUrl = URL.createObjectURL(file);
 
-      setPhoto(imageUrl);
-      setCalImg(formData);
+      setCalImg(imageUrl);
+      setPhoto(formData);
     }
   };
 
   const handleClick = () => photoInput.current?.click();
   const deletePhoto = () => {
-    setCalImg(new FormData());
-    setPhoto(null);
+    setCalImg('');
+    setPhoto(new FormData());
   };
 
   return (
@@ -85,9 +85,9 @@ const EditDetailPhoto = () => {
         />
       </IconContainer>
       <ImageContainer>
-        {calendarData?.photo && (
+        {nowData?.calImg && (
           <img
-            src={calendarData?.photo}
+            src={nowData?.calImg}
             alt='기록 이미지'
             style={{ width: '100%', height: 'auto' }}
           />
