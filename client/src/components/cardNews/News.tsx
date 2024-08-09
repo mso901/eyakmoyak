@@ -5,6 +5,7 @@ import NewsTitle from './NewsTitle';
 import NewsSlide from './NewsSlide';
 import NewsDescription from './NewsDescription';
 import Nav from '../common/Nav';
+import Seo from '../common/Seo';
 
 const NEWS = [
   {
@@ -42,13 +43,20 @@ const News = () => {
   const { bigTitle, smallTitle, description, images } = NEWS[index];
 
   return (
-    <NewsContainer>
-      <Header />
-      <NewsTitle bigTitle={bigTitle} smallTitle={smallTitle} images={images} />
-      <NewsSlide num={index + 1} />
-      <NewsDescription description={description} />
-      <Nav />
-    </NewsContainer>
+    <>
+      <Seo title={'카드뉴스'} />
+      <NewsContainer>
+        <Header />
+        <NewsTitle
+          bigTitle={bigTitle}
+          smallTitle={smallTitle}
+          images={images}
+        />
+        <NewsSlide num={index + 1} />
+        <NewsDescription description={description} />
+        <Nav />
+      </NewsContainer>
+    </>
   );
 };
 

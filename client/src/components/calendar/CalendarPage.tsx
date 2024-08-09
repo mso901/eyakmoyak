@@ -11,6 +11,7 @@ import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import CalendarDetail from './CalendarDetail';
 import CalendarSection from './CalendarSection';
 import CalendarToast from './CalendarToast';
+import Seo from '../common/Seo';
 
 const CalendarPage: React.FC = () => {
   const { value, arrow, setArrow, edit, setEdit, setAddTaken, onChange } =
@@ -55,53 +56,56 @@ const CalendarPage: React.FC = () => {
   };
 
   return (
-    <CalendarContainer>
-      <Modal
-        expanded={arrow ? 'true' : undefined}
-        onClick={() => handleModal()}
-      />
-      <Layout />
-      <MainContent>
-        <CalendarSection />
-        <EntireDetail expanded={arrow ? 'true' : undefined}>
-          <CalandarDatailContainer>
-            <ImgContainer onClick={() => setArrow(!arrow)}>
-              <Line />
-            </ImgContainer>
-            <TopContainer onClick={() => setArrow(true)}>
-              <DateBox>{days}</DateBox>
-              {!edit ? (
-                <Icon
-                  icon='uil:edit'
-                  width='20px'
-                  height='20px'
-                  onClick={() => openEdit(true)}
-                />
-              ) : (
-                <Icon
-                  icon='uil:edit'
-                  width='20px'
-                  height='20px'
-                  style={{ color: '#72bf44' }}
-                  onClick={() => openEdit(false)}
-                />
-              )}
-            </TopContainer>
-          </CalandarDatailContainer>
-          <DetailContainer>
-            <CalendarDetail />
-          </DetailContainer>
-        </EntireDetail>
-      </MainContent>
-      {showPopup && (
-        <Popup onClose={() => setShowPopup(false)}>
-          {PopupContent(popupType, navigate)}
-        </Popup>
-      )}
-      {!edit && maxTime ? (
-        <CalendarToast title='저장' str='저장 완료!' />
-      ) : null}
-    </CalendarContainer>
+    <>
+      <Seo title={'캘린더'} />
+      <CalendarContainer>
+        <Modal
+          expanded={arrow ? 'true' : undefined}
+          onClick={() => handleModal()}
+        />
+        <Layout />
+        <MainContent>
+          <CalendarSection />
+          <EntireDetail expanded={arrow ? 'true' : undefined}>
+            <CalandarDatailContainer>
+              <ImgContainer onClick={() => setArrow(!arrow)}>
+                <Line />
+              </ImgContainer>
+              <TopContainer onClick={() => setArrow(true)}>
+                <DateBox>{days}</DateBox>
+                {!edit ? (
+                  <Icon
+                    icon='uil:edit'
+                    width='20px'
+                    height='20px'
+                    onClick={() => openEdit(true)}
+                  />
+                ) : (
+                  <Icon
+                    icon='uil:edit'
+                    width='20px'
+                    height='20px'
+                    style={{ color: '#72bf44' }}
+                    onClick={() => openEdit(false)}
+                  />
+                )}
+              </TopContainer>
+            </CalandarDatailContainer>
+            <DetailContainer>
+              <CalendarDetail />
+            </DetailContainer>
+          </EntireDetail>
+        </MainContent>
+        {showPopup && (
+          <Popup onClose={() => setShowPopup(false)}>
+            {PopupContent(popupType, navigate)}
+          </Popup>
+        )}
+        {!edit && maxTime ? (
+          <CalendarToast title='저장' str='저장 완료!' />
+        ) : null}
+      </CalendarContainer>
+    </>
   );
 };
 

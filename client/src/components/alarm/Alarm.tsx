@@ -5,6 +5,7 @@ import Nav from '../common/Nav';
 import Toast from '../common/Toast';
 import AlarmPage from './AlarmPage';
 import AlarmSettings from './AlarmSettings';
+import Seo from '../common/Seo';
 
 export interface AlarmProps {
   setShowToast: Dispatch<SetStateAction<string>>;
@@ -28,11 +29,14 @@ const Alarm = () => {
   };
 
   return (
-    <PageContainer>
-      {renderContent()}
-      {showToast && <Toast onEnd={() => setShowToast('')}>{showToast}</Toast>}
-      <Nav />
-    </PageContainer>
+    <>
+      <Seo title={'알람'} />
+      <PageContainer>
+        {renderContent()}
+        {showToast && <Toast onEnd={() => setShowToast('')}>{showToast}</Toast>}
+        <Nav />
+      </PageContainer>
+    </>
   );
 };
 

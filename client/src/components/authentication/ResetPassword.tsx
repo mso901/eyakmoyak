@@ -7,6 +7,7 @@ import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import Loading from '../common/Loading';
 import Popup from '../common/popup/Popup';
 import ValidationError from '../common/ValidationError';
+import Seo from '../common/Seo'
 
 interface FormData {
   newPassword: string;
@@ -172,66 +173,69 @@ const ResetPasswordRequest = () => {
   };
 
   return (
-    <Overlay>
-      <Icon
-        className='topClose'
-        onClick={() => {
-          navigate(-1);
-        }}
-        icon='material-symbols:close'
-        width='1.7rem'
-        height='1.7rem'
-        style={{ color: 'black' }}
-      />
+    <>
+      <Seo title={'비밀번호 재설정' } />
+      <Overlay>
+        <Icon
+          className='topClose'
+          onClick={() => {
+            navigate(-1);
+          }}
+          icon='material-symbols:close'
+          width='1.7rem'
+          height='1.7rem'
+          style={{ color: 'black' }}
+        />
 
-      <Content>
-        <Logo src='/img/logo_not_chicken.svg' alt='이약뭐약' />
-        <div className='title'>새로운 비밀번호를 입력해주세요.</div>
-        <form onSubmit={handleSubmit}>
-          <div className='login-inputs'>
-            <div className='input-container'>
-              {renderInput(InputType.NewPassword)}
-              <hr />
-              {renderInput(InputType.NewPasswordConfirm)}
+        <Content>
+          <Logo src='/img/logo_not_chicken.svg' alt='이약뭐약' />
+          <div className='title'>새로운 비밀번호를 입력해주세요.</div>
+          <form onSubmit={handleSubmit}>
+            <div className='login-inputs'>
+              <div className='input-container'>
+                {renderInput(InputType.NewPassword)}
+                <hr />
+                {renderInput(InputType.NewPasswordConfirm)}
+              </div>
             </div>
-          </div>
-          <div className='validation-error'>
-            <ValidationError
-              condition={
-                blurState.newPassword &&
-                (formData.newPassword.length < 8 ||
-                  !checkSpecialCharPattern(formData.newPassword))
-              }
-            >
-              패스워드는 8자리 이상, 특수문자를 포함해 입력해주세요.
-            </ValidationError>
-            <ValidationError
-              condition={
-                blurState.newPassword &&
-                blurState.newPasswordConfirm &&
-                formData.newPassword != formData.newPasswordConfirm
-              }
-            >
-              비밀번호와 비밀번호 확인이 동일하지않습니다.
-            </ValidationError>
-          </div>
+            <div className='validation-error'>
+              <ValidationError
+                condition={
+                  blurState.newPassword &&
+                  (formData.newPassword.length < 8 ||
+                    !checkSpecialCharPattern(formData.newPassword))
+                }
+              >
+                패스워드는 8자리 이상, 특수문자를 포함해 입력해주세요.
+              </ValidationError>
+              <ValidationError
+                condition={
+                  blurState.newPassword &&
+                  blurState.newPasswordConfirm &&
+                  formData.newPassword != formData.newPasswordConfirm
+                }
+              >
+                비밀번호와 비밀번호 확인이 동일하지않습니다.
+              </ValidationError>
+            </div>
 
-          <button
-            className='submitButton'
-            disabled={!isFormValid()}
-            type='submit'
-          >
-            다음
-          </button>
-        </form>
-      </Content>
-      {loading && <Loading />}
-      {popupType !== PopupType.None && (
-        <Popup onClose={() => setPopupType(PopupType.None)}>
-          {PopupContent(popupType, navigate)}
-        </Popup>
-      )}
-    </Overlay>
+            <button
+              className='submitButton'
+              disabled={!isFormValid()}
+              type='submit'
+            >
+              다음
+            </button>
+          </form>
+        </Content>
+        {loading && <Loading />}
+        {popupType !== PopupType.None && (
+          <Popup onClose={() => setPopupType(PopupType.None)}>
+            {PopupContent(popupType, navigate)}
+          </Popup>
+        )}
+      </Overlay>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import EmailLogin from './EmailLogin';
 import EmailVerification from './EmailVerification';
 import SnsLogin from './SnsLogin';
+import Seo from '../common/Seo'
 
 import { Icon } from '@iconify-icon/react';
 import { useState } from 'react';
@@ -41,19 +42,22 @@ const Login = () => {
   };
 
   return (
-    <Overlay>
-      <Icon
-        className='topClose'
-        onClick={() => {
-          navigate('/');
-        }}
-        icon='material-symbols:close'
-        width='1.7rem'
-        height='1.7rem'
-        style={{ color: 'black' }}
-      />
-      {renderContent()}
-    </Overlay>
+    <>
+      <Seo title={ '로그인'} />
+      <Overlay>
+        <Icon
+          className='topClose'
+          onClick={() => {
+            navigate('/');
+          }}
+          icon='material-symbols:close'
+          width='1.7rem'
+          height='1.7rem'
+          style={{ color: 'black' }}
+        />
+        {renderContent()}
+      </Overlay>
+    </>
   );
 };
 

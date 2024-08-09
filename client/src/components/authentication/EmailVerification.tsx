@@ -1,16 +1,20 @@
 import styled from 'styled-components';
+import Seo from '../common/Seo';
 
 const EmailVerification = () => {
   return (
-    <Overlay>
-      <Content>
-        <Logo src='/img/logo.svg' alt='이약뭐약' />
-        <div className='title'>
-          이메일 인증이 완료되었습니다. <br />
-          회원가입을 계속 진행해주세요.
-        </div>
-      </Content>
-    </Overlay>
+    <>
+      <Seo title={'이메일 인증'} />
+      <Overlay>
+        <Content>
+          <Logo src='/img/logo.svg' alt='이약뭐약' />
+          <div className='title'>
+            이메일 인증이 완료되었습니다. <br />
+            회원가입을 계속 진행해주세요.
+          </div>
+        </Content>
+      </Overlay>
+    </>
   );
 };
 
@@ -41,13 +45,13 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-content: center;
-  gap:50px;
-  width:100%;
+  gap: 50px;
+  width: 100%;
 
-  .title{
+  .title {
     text-align: center;
-    font-weight:500;
+    font-weight: 500;
   }
-}`;
+`;
 
 export default EmailVerification;

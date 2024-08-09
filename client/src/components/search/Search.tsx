@@ -7,6 +7,7 @@ import AutoComplete from './AutoComplete.tsx';
 import ImageSearchList from './ImageSearchList.tsx';
 import SearchHeader from './SearchHeader.tsx';
 import SearchHistory from './SearchHistory.tsx';
+import Seo from '../common/Seo';
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -29,11 +30,17 @@ const Search = () => {
   };
 
   return (
-    <SearchContainer>
-      <SearchHeader activeType={activeType} handleTypeClick={handleTypeClick} />
-      {renderer()}
-      <Nav />
-    </SearchContainer>
+    <>
+      <Seo title={'검색'} />
+      <SearchContainer>
+        <SearchHeader
+          activeType={activeType}
+          handleTypeClick={handleTypeClick}
+        />
+        {renderer()}
+        <Nav />
+      </SearchContainer>
+    </>
   );
 };
 

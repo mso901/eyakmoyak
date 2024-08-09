@@ -8,6 +8,7 @@ import FavoriteMedications from './FavoriteMedications';
 import ManageReviews from './ManageReviews';
 import MyInformation from './MyInformation';
 import MyMedications from './MyMedications';
+import Seo from '../common/Seo'
 
 import { Icon } from '@iconify-icon/react';
 import { useState } from 'react';
@@ -255,13 +256,16 @@ const MyPage = () => {
   };
 
   return (
-    <MyPageContainer>
-      <Header />
-      {renderContent()}
-      {/* <Toast str="이름 변경이 완료되었어요" /> */}
+    <>
+      <Seo title={ '마이페이지'} />
+      <MyPageContainer>
+        <Header />
+        {renderContent()}
+        {/* <Toast str="이름 변경이 완료되었어요" /> */}
 
-      <Nav />
-    </MyPageContainer>
+        <Nav />
+      </MyPageContainer>
+    </>
   );
 };
 

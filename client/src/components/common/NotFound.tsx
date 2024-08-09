@@ -1,26 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Seo from '../common/Seo';
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   return (
-    <NotFoundContainer>
-      <NotFoundImg src='/404.png' alt='404 Not Found' />
-      <Content className='main'>앗! 페이지가 없어요</Content>
-      <Content className='sub'>
-        요청하신 페이지가 존재하지 않거나, 이름이 변경되었거나, <br />
-        일시적으로 사용이 중단되었어요.
-      </Content>
-      <ButtonContainer>
-        <Button className='pre' onClick={() => navigate(-1)}>
-          이전 페이지
-        </Button>
-        <Button className='home' onClick={() => navigate('/')}>
-          이약뭐약 홈
-        </Button>
-      </ButtonContainer>
-    </NotFoundContainer>
+    <>
+      <Seo title={'NotFound'} />
+      <NotFoundContainer>
+        <NotFoundImg src='/404.png' alt='404 Not Found' />
+        <Content className='main'>앗! 페이지가 없어요</Content>
+        <Content className='sub'>
+          요청하신 페이지가 존재하지 않거나, 이름이 변경되었거나, <br />
+          일시적으로 사용이 중단되었어요.
+        </Content>
+        <ButtonContainer>
+          <Button className='pre' onClick={() => navigate(-1)}>
+            이전 페이지
+          </Button>
+          <Button className='home' onClick={() => navigate('/')}>
+            이약뭐약 홈
+          </Button>
+        </ButtonContainer>
+      </NotFoundContainer>
+    </>
   );
 };
 
