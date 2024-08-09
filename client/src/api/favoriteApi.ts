@@ -13,7 +13,6 @@ export const toggleFavoriteApi = async (
 ): Promise<ToggleFavoriteResponse> => {
   try {
     const data = await post(`/api/favorites/${pill.id}`, { pillId: pill.id });
-    console.log('좋아요 post:', data);
     if (onSuccess) onSuccess(data);
     return data;
   } catch (error) {

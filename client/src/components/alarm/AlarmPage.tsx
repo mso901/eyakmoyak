@@ -47,7 +47,6 @@ const AlarmPage = ({ setShowToast }: AlarmProps) => {
     if (updatedAlarm && updatedAlarm.alarmStatus !== undefined) {
       try {
         await updateAlarmStatus(updatedAlarm.id, updatedAlarm.alarmStatus);
-        console.log('알람상태:', updatedAlarm.alarmStatus);
         setAlarms(updatedAlarms);
         setShowToast('알람 상태가 업데이트되었습니다.');
       } catch (error) {

@@ -104,7 +104,6 @@ const SearchBox = ({ useRoute = false }: { useRoute?: boolean }) => {
       try {
         const results = await fetchPillDataByImage(images, 10, 0);
         setImageResults(results);
-        console.log('검색창 컴포넌트:', results);
         if (useRoute) {
           navigate(`/search`);
         }

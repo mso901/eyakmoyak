@@ -7,7 +7,6 @@ export const fetchPillDataByName = async (
 ) => {
   try {
     const data = await get(`/api/pills/search/name`, { name, limit, offset });
-    console.log('이름으로 검색 Get:', data);
     if (data.pills && data.pills.length > 0) {
       return data.pills[0];
     }
@@ -24,7 +23,6 @@ export const fetchPillListByEfficacy = async (
     const data = await get(`/api/pills/search/efficacy`, {
       efficacy
     });
-    console.log('효능으로 검색 Get:', data);
     if (data.pills && data.pills.length > 0) {
       return data.pills;
     }
@@ -50,7 +48,6 @@ export const fetchPillDataByImage = async (
         'Content-Type': 'multipart/form-data'
       }
     });
-    console.log('이미지로 검색 Post', data);
     return data.pills;
   } catch (error) {
     console.error('이미지로 약 데이터 가져오기 실패', error);
@@ -72,7 +69,6 @@ export const fetchAutocompleteSuggestions = async (name: string) => {
       throw new Error('자동완성 잘못된 응답 형식');
     }
   } catch (error) {
-    console.error('자동완성 데이터 가져오기 실패:', error);
     throw error;
   }
 };
@@ -80,7 +76,6 @@ export const fetchAutocompleteSuggestions = async (name: string) => {
 export const fetchReviewCount = async (pillId: string) => {
   try {
     const data = await get(`/api/pills/${pillId}/reviewcount`);
-    console.log('리뷰수:', data);
     return data.count;
   } catch (error) {
     console.log('리뷰 수 가져오기 실패:', error);
@@ -90,7 +85,6 @@ export const fetchReviewCount = async (pillId: string) => {
 export const fetchFavoriteCount = async (pillId: number) => {
   try {
     const data = await get(`/api/pills/${pillId}/favoritecount`);
-    console.log('좋아요 수:', data);
     return data.count;
   } catch (error) {
     console.error('즐겨찾기 수 가져오기 실패:', error);
