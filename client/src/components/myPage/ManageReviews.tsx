@@ -2,11 +2,11 @@ import { Icon } from '@iconify-icon/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { fetchUserAllReview, deleteReview } from '../../api/reviewApi';
-import Loading from '../Loading';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
+import Loading from '../common/Loading';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import { useNavigate } from 'react-router-dom';
-import Toast from '../Toast';
+import Toast from '../common/Toast';
 
 interface MedicationItem {
   id: number;

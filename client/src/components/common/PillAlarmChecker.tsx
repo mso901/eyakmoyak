@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Alarm, useAlarmStore } from '../store/alarm';
-import { useAllAlarmStore } from '../store/allAlarms';
-import Popup from './popup/Popup';
+import { Alarm, useAlarmStore } from '../../store/alarm';
+import { useAllAlarmStore } from '../../store/allAlarms';
+import Popup from '../common/popup/Popup';
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs';
 
 const PillAlarmChecker = () => {

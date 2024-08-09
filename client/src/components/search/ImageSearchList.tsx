@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PillData, usePillStore } from '../../store/pill';
-import Loading from '../Loading';
+import Loading from '../common/Loading';
 import { useEffect } from 'react';
 import { useSearchStore } from '../../store/search';
 
@@ -40,14 +40,6 @@ const ImageSearchList = ({ pills }: { pills: PillData[] | null }) => {
           </ListText>
         </ListItem>
       ))}
-      {pill.similarity ? (
-        <p>
-          텍스트 추출이 불가능하여 AI 이미지 유사도 검사를 통해 유사한 알약을
-          찾았습니다.
-        </p>
-      ) : (
-        <p>AI 텍스트 추출 기술을 이용하여 유사한 알약을 찾았습니다.</p>
-      )}
     </div>
   );
 };

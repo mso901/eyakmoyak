@@ -1,5 +1,5 @@
 import { ReactNode, HTMLAttributes, PropsWithChildren } from 'react';
-import { useIntersect } from '../hooks/useIntersect';
+import { useIntersect } from '../../hooks/useIntersect';
 
 export interface InfiniteScrollProps
   extends Pick<HTMLAttributes<HTMLDivElement>, 'className'> {

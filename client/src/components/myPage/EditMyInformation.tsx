@@ -3,12 +3,12 @@ import BottomPictureSheet from './BottomPictureSheet';
 import { Icon } from '@iconify-icon/react';
 import { useState } from 'react';
 import useUserStore, { LoginType } from '../../store/user';
-import Loading from '../Loading';
-import Popup from '../popup/Popup';
+import Loading from '../common/Loading';
+import Popup from '../common/popup/Popup';
 import { changeProfileImage, fetchUserProfile } from '../../api/myPageService';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import { useNavigate } from 'react-router-dom';
-import Toast from '../Toast';
+import Toast from '../common/Toast';
 
 interface Info {
   info: string;
@@ -68,7 +68,7 @@ const EditMyInformation = ({
             throw error;
           }
         );
-      } catch(error) {
+      } catch (error) {
         throw error;
       }
     }

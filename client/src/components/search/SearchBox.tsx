@@ -15,8 +15,8 @@ import { usePillStore } from '../../store/pill.ts';
 import { useSearchStore } from '../../store/search';
 import { useSearchHistoryStore } from '../../store/searchHistory';
 import BottomPictureSheet from '../myPage/BottomPictureSheet';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages.tsx';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages.tsx';
 import { debounce } from 'lodash-es';
 
 const SearchBox = ({ useRoute = false }: { useRoute?: boolean }) => {

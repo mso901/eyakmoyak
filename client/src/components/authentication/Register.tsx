@@ -3,10 +3,10 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { requestEmailVerification, signup } from '../../api/authService';
-import Loading from '../Loading';
-import ValidationError from '../ValidationError';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
+import Loading from '../common/Loading';
+import ValidationError from '../common/ValidationError';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 
 interface FormData {
   email: string;

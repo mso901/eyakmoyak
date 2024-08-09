@@ -2,7 +2,7 @@ import loadable from '@loadable/component';
 import 'dayjs/locale/ko';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import AuthenticatedRoute from './components/AuthenticatedRoute';
+import AuthenticatedRoute from './components/common/AuthenticatedRoute';
 
 const Home = loadable(() => import('./components/home/Home'));
 const News = loadable(() => import('./components/cardNews/News'));
@@ -27,7 +27,7 @@ const ResetPassword = loadable(
 );
 const ChatBot = loadable(() => import('./components/chatBot/ChatBot'));
 const Redirect = loadable(() => import('./components/authentication/Redirect'));
-const NotFound = loadable(() => import('./components/NotFound'));
+const NotFound = loadable(() => import('./components/common/NotFound'));
 
 const App = () => {
   return (

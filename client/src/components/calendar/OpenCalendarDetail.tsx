@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { calendarGet, calendarPost, calendarPut } from '../../api/calendarApi';
 import { useCalendar, useDateStore } from '../../store/calendar';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import DetailTextBox from './DetailTextBox';
 
 interface CalendarData {

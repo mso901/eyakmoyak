@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../Header';
+import Header from '../common/Header';
 import NewsTitle from './NewsTitle';
 import NewsSlide from './NewsSlide';
 import NewsDescription from './NewsDescription';
-import Nav from '../Nav';
+import Nav from '../common/Nav';
 
 const NEWS = [
   {

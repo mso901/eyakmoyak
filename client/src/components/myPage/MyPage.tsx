@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header from '../Header';
+import Header from '../common/Header';
 import EditMyInformation from './EditMyInformation';
 import EditName from './EditName';
 import EditPassword from './EditPassword';
@@ -15,10 +15,10 @@ import { useNavigate } from 'react-router-dom';
 import { deleteAccount, logout } from '../../api/authService';
 import { useChatBot } from '../../store/chatbot';
 import useUserStore from '../../store/user';
-import Loading from '../Loading';
-import Nav from '../Nav';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
+import Loading from '../common/Loading';
+import Nav from '../common/Nav';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import { useMyPillStore } from '../../store/myPill';
 import { useAllAlarmStore } from '../../store/allAlarms';
 

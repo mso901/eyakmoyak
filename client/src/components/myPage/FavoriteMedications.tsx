@@ -3,10 +3,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchMyFavorites, toggleFavoriteApi } from '../../api/favoriteApi';
-import Loading from '../Loading';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
-import Toast from '../Toast';
+import Loading from '../common/Loading';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
+import Toast from '../common/Toast';
 
 interface MedicationItem {
   pillid: number;

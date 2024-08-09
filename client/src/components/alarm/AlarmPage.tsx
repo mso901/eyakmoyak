@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Icon } from '@iconify-icon/react';
-import Header from '../Header';
-import Loading from '../Loading';
+import Header from '../common/Header';
+import Loading from '../common/Loading';
 import { Alarm, useAlarmStore } from '../../store/alarm';
 import { getAlarms, deleteAlarm, updateAlarmStatus } from '../../api/alarmApi';
-import LoginCheck from '../LoginCheck';
+import LoginCheck from '../common/LoginCheck';
 import { isUserLoggedIn } from '../../utils/auth';
 import { AlarmProps } from './Alarm';
 

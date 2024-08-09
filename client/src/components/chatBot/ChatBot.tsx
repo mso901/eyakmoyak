@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import ChatBotBox from './ChatBotBox';
 
 const ChatBot: React.FC = () => {

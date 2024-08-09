@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useDateStore } from '../../store/calendar';
-import Info from '../Info';
+import Info from '../common/Info';
 import BloodSugar from './calendarDetails/BloodSugar';
 import IsPillTaken from './calendarDetails/IsPillTaken';
 import Photo from './calendarDetails/Photo';

@@ -10,15 +10,15 @@ import {
 } from '../../api/favoriteApi';
 import { fetchFavoriteCount, fetchPillDataByName } from '../../api/searchApi';
 import { usePillStore } from '../../store/pill';
-import Loading from '../Loading';
-import Nav from '../Nav';
+import Loading from '../common/Loading';
+import Nav from '../common/Nav';
 import NotSearched from './NotSearched';
 import PillExp from './PillExp';
 import Review from './Review';
 import SearchHeader from './SearchHeader';
 
-import LoginCheck from '../LoginCheck';
-import Toast from '../Toast';
+import LoginCheck from '../common/LoginCheck';
+import Toast from '../common/Toast';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -130,10 +130,7 @@ const SearchResults = () => {
 
   return (
     <>
-      <SearchHeader
-        activeType={activeType}
-        handleTypeClick={handleTypeClick}
-      />
+      <SearchHeader activeType={activeType} handleTypeClick={handleTypeClick} />
       <SearchResultsContainer>
         <PillInfo>
           <PillImgs>

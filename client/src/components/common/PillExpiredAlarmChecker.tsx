@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Pill, useMyPillStore } from '../store/myPill';
-import { useAllAlarmStore } from '../store/allAlarms';
+import { Pill, useMyPillStore } from '../../store/myPill';
+import { useAllAlarmStore } from '../../store/allAlarms';
 import Popup from './popup/Popup';
 import { Icon } from '@iconify-icon/react/dist/iconify.mjs';
 

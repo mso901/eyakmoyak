@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { isUserLoggedIn } from '../utils/auth';
-import Popup from './popup/Popup';
-import PopupContent, { PopupType } from './popup/PopupMessages';
+import { isUserLoggedIn } from '../../utils/auth';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginCheckProps {

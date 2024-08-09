@@ -3,10 +3,10 @@ import { Icon } from '@iconify-icon/react';
 import { ChangeEvent, useState } from 'react';
 import useUserStore from '../../store/user';
 import { changeUserName } from '../../api/myPageService';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
-import Popup from '../popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
+import Popup from '../common/popup/Popup';
 import { useNavigate } from 'react-router-dom';
-import ValidationError from '../ValidationError';
+import ValidationError from '../common/ValidationError';
 
 const EditName = ({ onEdit }: { onEdit: () => void }) => {
   const { user } = useUserStore.getState();

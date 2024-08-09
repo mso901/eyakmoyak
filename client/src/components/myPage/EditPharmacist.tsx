@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify-icon/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import Loading from '../Loading';
+import Loading from '../common/Loading';
 import { registCertifications } from '../../api/certificationsApi';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
-import Popup from '../popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
+import Popup from '../common/popup/Popup';
 import { useNavigate } from 'react-router-dom';
 
 interface FormData {

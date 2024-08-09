@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { fetchReviewCount } from '../../api/searchApi';
 import { fetchReviews, createReview } from '../../api/reviewApi';
-import InfiniteScroll from '../InfiniteScroll';
-import LoginCheck from '../LoginCheck';
-import Toast from '../Toast';
+import InfiniteScroll from '../common/InfiniteScroll';
+import LoginCheck from '../common/LoginCheck';
+import Toast from '../common/Toast';
 
 export interface Review {
   id: number;
@@ -61,7 +61,7 @@ const Review = ({ pillId }: { pillId: number }) => {
   };
 
   const handleCancelReview = () => {
-    setNewReview(''); 
+    setNewReview('');
     setIsWritingReview(false);
   };
 

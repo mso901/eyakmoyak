@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { create } from 'zustand';
-import Layout from '../Layout';
+import Layout from '../common/Layout';
 import { fetchPillListByEfficacy } from '../../api/searchApi';
 import { useSearchParams } from 'react-router-dom';
-import Loading from '../Loading';
+import Loading from '../common/Loading';
 import NotSearched from './NotSearched';
 
 export interface PillData {
@@ -75,8 +75,10 @@ const TagPage = () => {
                 to={`/search/name?q=${encodeURIComponent(pill.name)}`}
               >
                 <PillImg>
-                  <img src={pill.boxurl ? pill.boxurl : pill.imgurl}
-                  alt={pill.name}/>
+                  <img
+                    src={pill.boxurl ? pill.boxurl : pill.imgurl}
+                    alt={pill.name}
+                  />
                 </PillImg>
                 <PillText>
                   <PillTitle>
@@ -156,7 +158,6 @@ const PillImg = styled.div`
   & img {
     width: 100%;
     max-height: 100%;
-
   }
 `;
 

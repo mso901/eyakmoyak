@@ -1,7 +1,7 @@
 import { Icon } from '@iconify-icon/react';
 import { useRef } from 'react';
 import styled from 'styled-components';
-import BottomSheet from '../BottomSheet';
+import BottomSheet from '../common/BottomSheet';
 
 const BottomPictureSheet = ({
   title,

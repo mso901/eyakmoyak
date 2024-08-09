@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify-icon/react';
-import BottomSheet from '../BottomSheet';
+import BottomSheet from '../common/BottomSheet';
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import {
   addMyPills,
   fetchMyPills,
   deleteMyPills
 } from '../../api/myMedicineApi';
-import Loading from '../Loading';
-import Popup from '../popup/Popup';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
+import Loading from '../common/Loading';
+import Popup from '../common/popup/Popup';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchAutocompleteSuggestions } from '../../api/searchApi';
-import Toast from '../Toast';
+import Toast from '../common/Toast';
 import { useMyPillStore } from '../../store/myPill';
 
 interface MedicationItem {

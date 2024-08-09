@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify-icon/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { resetPasswordRequest } from '../../api/authService';
-import PopupContent, { PopupType } from '../popup/PopupMessages';
-import Loading from '../Loading';
-import Popup from '../popup/Popup';
-import ValidationError from '../ValidationError';
+import PopupContent, { PopupType } from '../common/popup/PopupMessages';
+import Loading from '../common/Loading';
+import Popup from '../common/popup/Popup';
+import ValidationError from '../common/ValidationError';
 
 const ResetPasswordRequest = () => {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAlarmStore } from '../../store/alarm';
-import Nav from '../Nav';
-import Toast from '../Toast';
+import Nav from '../common/Nav';
+import Toast from '../common/Toast';
 import AlarmPage from './AlarmPage';
 import AlarmSettings from './AlarmSettings';
 

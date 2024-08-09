@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify-icon/react';
-import BottomSheet from '../BottomSheet';
+import BottomSheet from '../common/BottomSheet';
 import { ChangeEvent, useState } from 'react';
 
 const BottomEditNameSheet = ({
