@@ -33,7 +33,7 @@ const PillAlarmChecker = () => {
 
       if (nextPillAlarmTime != undefined && nextPillAlarmTime > now) return;
 
-      let startDate = new Date(alarm.endDate ?? '');
+      let startDate = new Date(alarm.startDate ?? '');
       startDate = new Date(
         startDate.getFullYear(),
         startDate.getMonth(),
