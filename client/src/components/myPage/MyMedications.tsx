@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify-icon/react';
 import BottomSheet from '../common/BottomSheet';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   addMyPills,
   fetchMyPills,
@@ -14,6 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { fetchAutocompleteSuggestions } from '../../api/searchApi';
 import Toast from '../common/Toast';
 import { useMyPillStore } from '../../store/myPill';
+import InfiniteScroll from '../common/InfiniteScroll';
 
 interface MedicationItem {
   id: string;
@@ -34,8 +35,6 @@ const MyMedications = () => {
   const [selected, setSelected] = useState<MedicationItem>();
   const [offset, setOffset] = useState(0);
   const [limit] = useState(10);
-  const [hasMore, setHasMore] = useState(true);
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState('');
   const { addPills, deletePill } = useMyPillStore();
@@ -113,31 +112,6 @@ const MyMedications = () => {
     setDate(value);
   };
 
-  const handleScroll = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const bottom =
-      container.scrollHeight === container.scrollTop + container.clientHeight;
-
-    if (bottom && !loading && hasMore) {
-      fetchDatas();
-    }
-  }, [loading, hasMore, offset]);
-
-  useEffect(() => {
-    fetchDatas();
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) container.addEventListener('scroll', handleScroll);
-
-    return () => {
-      if (container) container.removeEventListener('scroll', handleScroll);
-    };
-  }, [handleScroll]);
-
   const formatDate = (dateString: string): string => {
     if (!dateString) return '';
 
@@ -167,7 +141,6 @@ const MyMedications = () => {
           setItems((prevData) => [...temp, ...prevData]);
         } else {
           setItems((prevData) => [...prevData, ...temp]);
-          setHasMore(temp.length === limit);
         }
 
         setItemCount(data.totalCount);
@@ -242,20 +215,24 @@ const MyMedications = () => {
             📍<u>폐의약품 전용수거함 위치</u>
           </a>
         </div>
-        <div className='items' ref={containerRef}>
-          <Item>
-            <div className='empty' onClick={() => setBottomSheet(true)}>
-              <Icon
-                icon='basil:add-solid'
-                width='2rem'
-                height='2rem'
-                style={{ color: '#ffbb25' }}
-              />
-              새로운 나의 약 추가하기
-            </div>
-          </Item>
+        <Item className='add-new-item' style={{ marginBottom: '20px' }}>
+          <div className='empty' onClick={() => setBottomSheet(true)}>
+            <Icon
+              icon='basil:add-solid'
+              width='2rem'
+              height='2rem'
+              style={{ color: '#ffbb25' }}
+            />
+            새로운 나의 약 추가하기
+          </div>
+        </Item>
+        <InfiniteScroll
+          className='items'
+          loading={loading && <div>로딩중</div>}
+          onIntersect={() => fetchDatas()}
+        >
           {items.map((item, index) => renderItems(item, index))}
-        </div>
+        </InfiniteScroll>
 
         <Sheet>
           <BottomSheet
