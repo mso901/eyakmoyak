@@ -92,7 +92,14 @@ const SnsLogin = ({
       </div>
 
       {popupMessage !== null && (
-        <Popup onClose={() => setPopupMessage(null)}>{popupMessage}</Popup>
+        <Popup
+          onClose={() => {
+            setPopupMessage(null);
+            navigate('/login');
+          }}
+        >
+          {popupMessage}
+        </Popup>
       )}
     </Content>
   );
