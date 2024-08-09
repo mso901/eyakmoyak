@@ -16,9 +16,9 @@ import NotSearched from './NotSearched';
 import PillExp from './PillExp';
 import Review from './Review';
 import SearchHeader from './SearchHeader';
-
 import LoginCheck from '../common/LoginCheck';
 import Toast from '../common/Toast';
+import { isUserLoggedIn } from '../../utils/auth';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -59,9 +59,10 @@ const SearchResults = () => {
 
           const count = await fetchFavoriteCount(data.id);
           setFavoriteCount(count);
-
-          const { status } = await fetchFavoriteStatusApi(data.id);
-          setIsFavorite(status);
+          if (isUserLoggedIn()) {
+            const { status } = await fetchFavoriteStatusApi(data.id);
+            setIsFavorite(status);
+          }
         } else {
           setPillData(null);
         }

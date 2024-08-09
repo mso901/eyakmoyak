@@ -16,9 +16,7 @@ export const fetchPillDataByName = async (
   }
 };
 
-export const fetchPillListByEfficacy = async (
-  efficacy: string
-) => {
+export const fetchPillListByEfficacy = async (efficacy: string) => {
   try {
     const data = await get(`/api/pills/search/efficacy`, {
       efficacy
@@ -62,12 +60,7 @@ export const fetchAutocompleteSuggestions = async (name: string) => {
       limit: 10,
       offset: 0
     });
-
-    if (data && data.pills.length > 0) {
-      return data.pills;
-    } else {
-      throw new Error('자동완성 잘못된 응답 형식');
-    }
+    return data.pills;
   } catch (error) {
     throw error;
   }

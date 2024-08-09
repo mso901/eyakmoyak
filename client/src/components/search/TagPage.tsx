@@ -41,7 +41,7 @@ const TagPage = () => {
         const data = await fetchPillListByEfficacy(query);
         setPillData(data);
       } catch (error) {
-        console.log('효능 데이터 가져오기 실패:', error);
+        console.error('효능 데이터 가져오기 실패:', error);
       } finally {
         setLoading(false);
       }
