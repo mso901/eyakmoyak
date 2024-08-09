@@ -1,7 +1,7 @@
 import { Icon } from '@iconify-icon/react';
 import dayjs from 'dayjs';
 import Cookies from 'js-cookie';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { calendarPost, calendarPut } from '../../api/calendarApi';
@@ -23,7 +23,8 @@ const CalendarPage: React.FC = () => {
     setEdit,
     setAddTaken,
     posted,
-    addPosted
+    addPosted,
+    onChange
   } = useDateStore();
   const { nowData, photo, setNowData } = useCalendar();
   dayjs.locale('ko');
@@ -35,6 +36,14 @@ const CalendarPage: React.FC = () => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [popupType, setPopupType] = useState<PopupType>(PopupType.None);
   const isPosted = posted.some((item) => item.date === formattedDate);
+
+  useEffect(() => {
+    const now = dayjs().toDate();
+    setEdit(false);
+    setArrow(false);
+    setAddTaken(false);
+    onChange(now);
+  }, []);
 
   const formData = new FormData();
   formData.append('date', formattedDate);
