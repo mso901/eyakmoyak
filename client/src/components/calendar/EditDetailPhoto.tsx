@@ -59,7 +59,6 @@ const EditDetailPhoto = () => {
 
       setCalImg(imageUrl);
       setPhoto(formData);
-      console.log(nowData?.calImg);
     }
   };
 

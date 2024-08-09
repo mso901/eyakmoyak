@@ -17,7 +17,7 @@ interface Store {
   posted: Array<{ date?: string; post?: boolean }>;
   addPosted: (newPost: { date: string; post: boolean }) => void;
   setPosted: (date: string, post: boolean) => void;
-  removePostedByDate: (date: string) => void;
+  resetPosted: (newPosts: Array<{ date?: string; post?: boolean }>) => void;
 }
 
 export const useDateStore = create<Store>((set) => ({
@@ -51,9 +51,9 @@ export const useDateStore = create<Store>((set) => ({
         item.date === date ? { ...item, post } : item
       )
     })),
-  removePostedByDate: (date) =>
-    set((state) => ({
-      posted: state.posted.filter((item) => item.date !== date)
+  resetPosted: (newPosts) =>
+    set(() => ({
+      posted: newPosts
     }))
 }));
 
