@@ -29,6 +29,14 @@ const FavoriteMedications = () => {
   const navigate = useNavigate();
   const maxTextLength = 15;
 
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return '';
+
+    const [datePart] = dateString.split('T');
+    const [year, month, day] = datePart.split('-');
+    return `${year}.${month}.${day}`;
+  };
+
   const fetchDatas = () => {
     setLoading(true);
 
@@ -42,7 +50,7 @@ const FavoriteMedications = () => {
         const temp: MedicationItem[] = favorites.map((d: any) => ({
           pillid: Number(d.pillid),
           title: d.name,
-          registrationDate: new Date(d.createdat).toDateString(),
+          registrationDate: formatDate(d.createdat),
           tags:
             d.importantWords === ''
               ? []
