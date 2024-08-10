@@ -218,7 +218,7 @@ const MyMedications = () => {
           className='info'
           onClick={() => setPopupType(PopupType.ExpiredMedNotice)}
         >
-          📍<u>폐의약품 전용수거함 위치</u>
+          📍<u>유효기간 지나기 전에 버리세요!</u>
         </div>
         <Item className='add-new-item' style={{ marginBottom: '20px' }}>
           <div className='empty' onClick={() => setAddBottomSheet(true)}>
