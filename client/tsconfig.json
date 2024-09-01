@@ -1,0 +1,22 @@
+{
+  "include": ["custom.d.ts"],
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "types": ["vite-plugin-svgr/client"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "/img/*": ["./src/assets/img/*"]
+    }
+  }
+}
