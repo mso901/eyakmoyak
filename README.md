@@ -2,8 +2,6 @@
 
 ## 팀 소개 (chicken pharm)
 
-<img src="https://kdt-gitlab.elice.io/ai_track/class_10/ai_project/team04/chicken_pharm/-/wikis/uploads/4db131d032daba4376dab26d4d9730e6/image.png" alt="image" width="400px">
-
 - **팀 이름 : chicken pharm**
 
   - 프로젝트 이름인 '이약뭐약'이 “삐약삐약” 소리와 비슷해서 병아리와 관련된 팀명을 정하고자 했고, 병아리가 모여서 살고 있는 chicken farm에서 farm 대신에 약을 의미하는 pharm을 넣어서, 귀엽지만 전문적인 느낌을 주고자 팀 이름을 chicken pharm으로 정했습니다.  
@@ -29,8 +27,6 @@
 ## 프로젝트 구성 안내
 
 ### 1. 프로젝트 소개
-
-<img src="https://kdt-gitlab.elice.io/ai_track/class_10/ai_project/team04/chicken_pharm/-/wikis/uploads/e3fdb43a82d1be23dc42332c74afa6d5/image.png" alt="image" width="400px">
 
 #### 1) 이약뭐약 (eyakmoyak)
 
@@ -96,10 +92,6 @@
 
 - Figma [[링크]](https://www.figma.com/design/mO8T4e32TFgUemMGbqhdy2/%EC%9D%B4%EC%95%BD%EB%AD%90%EC%95%BD?node-id=34-503&t=V53oUqaWkj4BleBE-0)
 
-- ERD
-
-<img src="https://kdt-gitlab.elice.io/ai_track/class_10/ai_project/team04/chicken_pharm/-/wikis/uploads/cdbdd53e96efc6d561e97222f99f93b6/image.png" alt="image" width="700px">
-
 ### 3. 기술 스택
 
 - Frontend : React, TypeScript, Vite, Zustand
@@ -111,8 +103,6 @@
 - Deploy : Jenkins, Nginx, Google Cloud Platform, Docker, Docker Hub
 
 - AI : Python, ChatGPT-4o mini, Google Cloud Vision API OCR
-
-<img src="https://kdt-gitlab.elice.io/ai_track/class_10/ai_project/team04/chicken_pharm/-/wikis/uploads/edb62b79bc52188f500fb3b7044985f2/image.png" alt="image" width="700px">
 
 ### 4. 버전
 
